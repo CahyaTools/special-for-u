@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The C Project — Webnovel Indonesia</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/thecproject.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <style>
+        /* ============================================================
+               ROOT VARIABLES & RESET
+            ============================================================ */
+        :root {
+            --primary: #7C5CFC;
+            --primary-dark: #5B3FD4;
+            --primary-light: #A084FF;
+            --secondary: #FF6B8A;
+            --accent: #3DDC97;
+            --gold: #FFD166;
+            --bg-dark: #0B0B1A;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8A8C8;
+            --text-muted: #6B6B8D;
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.2);
+            
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-hand: 'Caveat', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+        /* ============================================================
+               APP WRAPPER
+            ============================================================ */
+        .app {
+            min-height: 100vh;
+            position: relative;
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.04) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        @media (min-width: 1024px) {
+            .app {
+                width: 80%;
+                max-width: 1280px;
+                margin: 0 auto;
+                border-left: 1px solid var(--border-light);
+                border-right: 1px solid var(--border-light);
+                box-shadow: 0 0 80px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* ============================================================
+               AMBIENT GLOW ORBS
+            ============================================================ */
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+        .orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; background: var(--primary); opacity: 0.08; }
+        .orb-2 { width: 300px; height: 300px; bottom: 100px; left: -50px; background: var(--secondary); opacity: 0.06; }
+        .orb-3 { width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent); opacity: 0.04; }
+
+        /* ============================================================
+               HEADER
+            ============================================================ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 16px;
+            background: rgba(11, 11, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) { .header { padding: 16px 24px; } }
+
+        .header-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+        .header-brand-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+        }
+
+        @media (min-width: 768px) { .header-brand-icon { width: 40px; height: 40px; font-size: 18px; } }
+
+        .header-brand-text {
+            font-size: 17px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        @media (min-width: 768px) { .header-brand-text { font-size: 20px; } }
+
+        .header-actions { display: flex; align-items: center; gap: 6px; }
+        @media (min-width: 768px) { .header-actions { gap: 8px; } }
+
+        .header-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) { .header-btn { width: 40px; height: 40px; font-size: 16px; } }
+
+        .header-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+               HERO
+            ============================================================ */
+        .hero { padding: 40px 16px 30px; text-align: center; position: relative; }
+        @media (min-width: 768px) { .hero { padding: 60px 24px 40px; } }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(124, 92, 252, 0.12);
+            border: 1px solid rgba(124, 92, 252, 0.15);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--primary-light);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) { .hero-badge { padding: 6px 20px; font-size: 12px; margin-bottom: 24px; } }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 768px) { .hero h1 { margin-bottom: 16px; } }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+        }
+
+        @media (min-width: 768px) { .hero p { margin-bottom: 32px; line-height: 1.7; } }
+
+        .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        @media (min-width: 768px) { .hero-actions { gap: 12px; } }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            font-family: var(--font);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) { .btn { padding: 14px 32px; font-size: 15px; gap: 10px; } }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 24px rgba(124, 92, 252, 0.3);
+        }
+
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(124, 92, 252, 0.4); }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover { background: var(--bg-card-hover); border-color: var(--primary); transform: translateY(-3px); }
+
+        .btn-sm { padding: 6px 12px; font-size: 11px; gap: 4px; }
+        @media (min-width: 768px) { .btn-sm { padding: 8px 18px; font-size: 13px; gap: 8px; } }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        /* ============================================================
+               SECTIONS
+            ============================================================ */
+        .section { padding: 24px 16px 40px; }
+        @media (min-width: 768px) { .section { padding: 40px 24px 60px; } }
+
+        .section-header { text-align: center; margin-bottom: 24px; }
+        @media (min-width: 768px) { .section-header { margin-bottom: 40px; } }
+
+        .section-header h2 {
+            font-size: clamp(1.4rem, 2.5vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        @media (min-width: 768px) { .section-header h2 { margin-bottom: 8px; } }
+
+        .section-header p { color: var(--text-secondary); font-size: 0.9rem; }
+        @media (min-width: 768px) { .section-header p { font-size: 1rem; } }
+
+        /* Novels Grid */
+        .novels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (min-width: 480px) { .novels-grid { gap: 14px; } }
+        @media (min-width: 768px) { .novels-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        @media (min-width: 1024px) { .novels-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+
+        .novel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        @media (min-width: 768px) { .novel-card { border-radius: var(--radius-md); } }
+
+        .novel-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 16px 48px rgba(124, 92, 252, 0.15);
+        }
+
+        @media (min-width: 768px) { .novel-card:hover { transform: translateY(-8px); } }
+
+        .novel-card-cover { position: relative; padding-top: 140%; background: var(--bg-dark); overflow: hidden; }
+
+        .novel-card-cover img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .novel-card:hover .novel-card-cover img { transform: scale(1.05); }
+
+        .novel-card-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.3);
+        }
+
+        @media (min-width: 768px) { .novel-card-badge { top: 12px; right: 12px; padding: 4px 14px; font-size: 10px; } }
+
+        .novel-card-badge.soon {
+            background: linear-gradient(135deg, var(--secondary), #e55a76);
+            box-shadow: 0 4px 16px rgba(255, 107, 138, 0.3);
+        }
+
+        .novel-card-body { padding: 12px 12px 14px; flex: 1; display: flex; flex-direction: column; }
+        @media (min-width: 768px) { .novel-card-body { padding: 18px 20px 20px; } }
+
+        .novel-card-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; line-height: 1.2; }
+        @media (min-width: 768px) { .novel-card-title { font-size: 17px; margin-bottom: 4px; } }
+
+        .novel-card-author { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; }
+        @media (min-width: 768px) { .novel-card-author { font-size: 13px; margin-bottom: 10px; } }
+
+        .novel-card-author i { color: var(--primary); margin-right: 3px; }
+        @media (min-width: 768px) { .novel-card-author i { margin-right: 4px; } }
+
+        .novel-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+        @media (min-width: 768px) { .novel-card-tags { gap: 6px; margin-bottom: 12px; } }
+
+        .novel-card-tag {
+            padding: 1px 8px;
+            border-radius: 50px;
+            font-size: 8px;
+            font-weight: 600;
+            background: rgba(124, 92, 252, 0.1);
+            color: var(--primary-light);
+            border: 1px solid rgba(124, 92, 252, 0.08);
+        }
+
+        @media (min-width: 768px) { .novel-card-tag { padding: 2px 12px; font-size: 11px; } }
+
+        .novel-card-desc { display: none; }
+
+        @media (min-width: 768px) {
+            .novel-card-desc {
+                display: -webkit-box;
+                font-size: 14px;
+                color: var(--text-secondary);
+                line-height: 1.5;
+                flex: 1;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                margin-bottom: 14px;
+            }
+        }
+
+        .novel-card-actions { display: flex; gap: 6px; margin-top: auto; }
+        @media (min-width: 768px) { .novel-card-actions { gap: 8px; } }
+
+        .novel-card-actions .btn { flex: 1; justify-content: center; padding: 6px 8px; font-size: 10px; }
+        @media (min-width: 768px) { .novel-card-actions .btn { padding: 10px 12px; font-size: 13px; } }
+
+        /* Community */
+        .community-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 480px) { .community-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 768px) { .community-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+
+        .community-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 20px 16px;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        @media (min-width: 768px) { .community-card { border-radius: var(--radius-md); padding: 28px 24px; } }
+
+        .community-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+        }
+
+        .community-card .icon { font-size: 24px; color: var(--primary); margin-bottom: 8px; display: inline-block; }
+        @media (min-width: 768px) { .community-card .icon { font-size: 32px; margin-bottom: 12px; } }
+
+        .community-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        @media (min-width: 768px) { .community-card h3 { font-size: 18px; margin-bottom: 6px; } }
+
+        .community-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+        @media (min-width: 768px) { .community-card p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; } }
+
+        .community-card .btn { width: 100%; justify-content: center; font-size: 11px; padding: 8px 12px; }
+        @media (min-width: 768px) { .community-card .btn { font-size: 13px; padding: 10px 12px; } }
+
+        /* Footer */
+        .footer { padding: 30px 16px 20px; border-top: 1px solid var(--border-light); margin-top: 20px; }
+        @media (min-width: 768px) { .footer { padding: 40px 24px 24px; } }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 640px) { .footer-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+
+        .footer-col h4 { font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+        @media (min-width: 768px) { .footer-col h4 { font-size: 14px; margin-bottom: 10px; } }
+
+        .footer-col p, .footer-col a {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 3px;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) { .footer-col p, .footer-col a { font-size: 13px; margin-bottom: 4px; } }
+        .footer-col a:hover { color: var(--primary-light); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid var(--border-light);
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom { padding-top: 20px; margin-top: 20px; font-size: 12px; }
+        }
+
+        /* ============================================================
+               INFO POPUP (NOVEL DETAIL)
+            ============================================================ */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-overlay.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .popup {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 24px 20px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+        }
+
+        @media (min-width: 768px) {
+            .popup { padding: 32px; border-radius: var(--radius-lg); }
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) { .popup-header { margin-bottom: 20px; } }
+
+        .popup-header h3 {
+            font-size: 17px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) { .popup-header h3 { font-size: 20px; gap: 10px; } }
+
+        .popup-close {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) { .popup-close { width: 36px; height: 36px; } }
+
+        .popup-close:hover { background: var(--bg-card-hover); color: var(--text-primary); transform: rotate(90deg); }
+
+        .popup-body { color: var(--text-secondary); line-height: 1.6; }
+        @media (min-width: 768px) { .popup-body { line-height: 1.7; } }
+
+        .popup-body p { margin-bottom: 10px; font-size: 13px; }
+        @media (min-width: 768px) { .popup-body p { margin-bottom: 12px; font-size: 14px; } }
+
+        .popup-actions { display: flex; gap: 8px; margin-top: 16px; }
+        @media (min-width: 768px) { .popup-actions { gap: 10px; margin-top: 20px; } }
+
+        .popup-actions .btn { flex: 1; justify-content: center; font-size: 12px; padding: 8px 12px; }
+        @media (min-width: 768px) { .popup-actions .btn { font-size: 14px; padding: 10px 16px; } }
+
+        /* ============================================================
+               TOAST
+            ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 18px;
+            border-radius: 50px;
+            background: rgba(11, 11, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 12px;
+            z-index: 2000;
+            animation: toastIn 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) { .toast { bottom: 90px; padding: 12px 24px; font-size: 14px; } }
+
+        .toast.out { animation: toastOut 0.4s ease forwards; }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+        }
+
+        /* ============================================================
+               MOBILE BOTTOM NAV
+            ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(11, 11, 26, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-light);
+            padding: 6px 0;
+            padding-bottom: env(safe-area-inset-bottom, 6px);
+            z-index: 99;
+            display: none;
+        }
+
+        .bottom-nav-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            padding: 4px 0;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: var(--font);
+        }
+
+        @media (min-width: 768px) { .bottom-nav-item { font-size: 10px; gap: 2px; padding: 6px 0; } }
+
+        .bottom-nav-item i { font-size: 18px; transition: var(--transition); }
+        @media (min-width: 768px) { .bottom-nav-item i { font-size: 20px; } }
+
+        .bottom-nav-item.active { color: var(--primary); }
+        .bottom-nav-item.active i { transform: scale(1.1); }
+        .bottom-nav-item:hover { color: var(--text-primary); }
+
+        @media (max-width: 1023px) {
+            .bottom-nav { display: block; }
+            body { padding-bottom: 60px; }
+        }
+
+        @media (min-width: 1024px) {
+            .bottom-nav { display: none !important; }
+            body { padding-bottom: 0; }
+        }
+
+        /* ============================================================
+               DARK / LIGHT MODE
+            ============================================================ */
+        [data-theme="light"] {
+            --bg-dark: #F0F0F5;
+            --bg-card: rgba(255, 255, 255, 0.6);
+            --bg-card-hover: rgba(255, 255, 255, 0.8);
+            --text-primary: #1A1A2E;
+            --text-secondary: #4A4A6A;
+            --text-muted: #8A8AAA;
+            --border-light: rgba(0, 0, 0, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.15);
+        }
+
+        [data-theme="light"] .app {
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.04) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.03) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        [data-theme="light"] .header { background: rgba(240, 240, 245, 0.85); }
+        [data-theme="light"] .bottom-nav { background: rgba(240, 240, 245, 0.95); }
+        [data-theme="light"] .toast { background: rgba(240, 240, 245, 0.95); color: var(--text-primary); }
+        [data-theme="light"] .popup { background: #ffffff; }
+        [data-theme="light"] .novel-card { background: rgba(255, 255, 255, 0.7); }
+        [data-theme="light"] .novel-card:hover { background: rgba(255, 255, 255, 0.9); }
+
+        /* ============================================================
+               SCROLL ANIMATIONS
+            ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media (min-width: 768px) {
+            .reveal {
+                transform: translateY(40px);
+                transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .reveal-delay-1 { transition-delay: 0.05s; }
+        .reveal-delay-2 { transition-delay: 0.1s; }
+        .reveal-delay-3 { transition-delay: 0.15s; }
+        .reveal-delay-4 { transition-delay: 0.2s; }
+
+        /* ============================================================
+               LETTER POPUP — WELCOME MESSAGE
+            ============================================================ */
+        .letter-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 15, 0.94);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: letterOverlayIn 0.6s ease;
+        }
+
+        .letter-overlay.active { display: flex; }
+
+        @keyframes letterOverlayIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .letter-box {
+            background: linear-gradient(160deg,
+                rgba(20, 15, 35, 0.98) 0%,
+                rgba(30, 20, 50, 0.98) 100%);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 32px 24px 24px;
+            max-width: 540px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 100px rgba(255, 209, 102, 0.15),
+                inset 0 0 60px rgba(124, 92, 252, 0.05);
+            animation: letterIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media (min-width: 768px) {
+            .letter-box { padding: 44px 40px 32px; border-radius: var(--radius-xl); }
+        }
+
+        @keyframes letterIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.92); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .letter-box::before,
+        .letter-box::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 209, 102, 0.4);
+            pointer-events: none;
+        }
+
+        .letter-box::before {
+            top: 12px;
+            left: 12px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+        }
+
+        .letter-box::after {
+            bottom: 12px;
+            right: 12px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 8px;
+        }
+
+        .letter-box::-webkit-scrollbar { width: 4px; }
+        .letter-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 209, 102, 0.3);
+            border-radius: 10px;
+        }
+
+        .letter-seal {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD166, #ff9f1c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #1A1A2E;
+            box-shadow:
+                0 8px 30px rgba(255, 209, 102, 0.4),
+                inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            animation: sealPulse 2.5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes sealPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 30px rgba(255, 209, 102, 0.4), inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 12px 40px rgba(255, 209, 102, 0.65), inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .letter-header { text-align: center; margin-bottom: 20px; }
+
+        .letter-to {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .letter-name {
+            font-family: var(--font-hand);
+            font-size: clamp(2.2rem, 6vw, 3.2rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD166 0%, #FF6B8A 50%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 20px rgba(255, 209, 102, 0.3));
+        }
+
+        .letter-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 18px 0;
+            color: rgba(255, 209, 102, 0.6);
+            font-size: 10px;
+            letter-spacing: 6px;
+        }
+
+        .letter-divider::before,
+        .letter-divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(255, 209, 102, 0.4), transparent);
+        }
+
+        .letter-body {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 14px;
+            line-height: 1.85;
+            font-weight: 400;
+            text-align: left;
+            padding: 0 2px;
+        }
+
+        @media (min-width: 768px) {
+            .letter-body { font-size: 15.5px; line-height: 1.9; }
+        }
+
+        .letter-body p {
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: textFadeIn 0.8s ease forwards;
+        }
+
+        .letter-body p:nth-child(1) { animation-delay: 0.4s; }
+        .letter-body p:nth-child(2) { animation-delay: 0.7s; }
+        .letter-body p:nth-child(3) { animation-delay: 1.0s; }
+        .letter-body p:nth-child(4) { animation-delay: 1.3s; }
+        .letter-body p:nth-child(5) { animation-delay: 1.6s; }
+        .letter-body p:nth-child(6) { animation-delay: 1.9s; }
+        .letter-body p:nth-child(7) { animation-delay: 2.2s; }
+        .letter-body p:nth-child(8) { animation-delay: 2.5s; }
+        .letter-body p:nth-child(9) { animation-delay: 2.8s; }
+        .letter-body p:nth-child(10) { animation-delay: 3.1s; }
+        .letter-body p:nth-child(11) { animation-delay: 3.4s; }
+
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .letter-body .highlight { color: #FFD166; font-weight: 700; }
+        .letter-body .em { color: var(--primary-light); font-style: italic; font-weight: 500; }
+
+        .letter-body .bold-line {
+            font-family: var(--font-hand);
+            font-weight: 700;
+            color: #FFD166;
+            font-size: 22px;
+            display: inline-block;
+            padding: 2px 0;
+            letter-spacing: 0.5px;
+        }
+
+        @media (min-width: 768px) {
+            .letter-body .bold-line { font-size: 26px; }
+        }
+
+        .letter-signature {
+            margin-top: 26px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 209, 102, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            animation: textFadeIn 1s ease 3.7s forwards;
+        }
+
+        .letter-signature-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: white;
+            border: 2px solid rgba(255, 209, 102, 0.5);
+            box-shadow: 0 6px 24px rgba(124, 92, 252, 0.4);
+            flex-shrink: 0;
+        }
+
+        .letter-signature-text { display: flex; flex-direction: column; }
+
+        .letter-signature-text .from {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .letter-signature-text .name {
+            font-family: var(--font-hand);
+            font-size: 26px;
+            font-weight: 700;
+            color: #FFD166;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+
+        .letter-footer {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .letter-countdown-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .letter-countdown-text .timer {
+            color: #FFD166;
+            font-weight: 800;
+            font-size: 15px;
+            font-variant-numeric: tabular-nums;
+            display: inline-block;
+            min-width: 22px;
+        }
+
+        .letter-countdown-text .timer.done { color: var(--accent); }
+
+        .letter-progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .letter-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FFD166, #FF6B8A, var(--primary-light));
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(255, 209, 102, 0.5);
+            transition: width 1s linear;
+        }
+
+        .letter-close-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 13px;
+            font-family: var(--font);
+            cursor: not-allowed;
+            transition: all 0.4s ease;
+            opacity: 0.55;
+            pointer-events: none;
+            min-width: 220px;
+        }
+
+        .letter-close-btn.ready {
+            background: linear-gradient(135deg, #FFD166, #ff9f1c);
+            color: #1A1A2E;
+            cursor: pointer;
+            opacity: 1;
+            pointer-events: auto;
+            box-shadow: 0 6px 24px rgba(255, 209, 102, 0.4);
+            animation: btnReadyPulse 2s ease-in-out infinite;
+        }
+
+        .letter-close-btn.ready:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 10px 32px rgba(255, 209, 102, 0.55);
+        }
+
+        @keyframes btnReadyPulse {
+            0%, 100% { box-shadow: 0 6px 24px rgba(255, 209, 102, 0.4); }
+            50% { box-shadow: 0 6px 32px rgba(255, 209, 102, 0.7); }
+        }
+
+        .letter-close-btn i { font-size: 14px; }
+    </style>
+</head>
+<body>
+    <!-- ===== AMBIENT ORBS ===== -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ===== APP ===== -->
+    <div class="app">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <a href="#" class="header-brand">
+                <div class="header-brand-icon">C</div>
+                <span class="header-brand-text">The C Project</span>
+            </a>
+            <div class="header-actions">
+                <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="home">
+            <div class="hero-badge">✨ Original Webnovel</div>
+            <h1>
+                Temukan Dunia Baru<br />
+                <span class="highlight">Lewat Cerita</span>
+            </h1>
+            <p>
+                Jelajahi webnovel orisinal dari penulis berbakat. Bergabunglah dengan
+                komunitas dan nikmati cerita yang akan membawamu ke petualangan tak terlupakan.
+            </p>
+            <div class="hero-actions">
+                <a href="#novels" class="btn btn-primary">
+                    <i class="fas fa-compass"></i> Jelajahi
+                </a>
+                <button class="btn btn-secondary" id="heroReadBtn">
+                    <i class="fas fa-book-open"></i> Baca Sekarang
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== NOVELS ===== -->
+        <section class="section" id="novels">
+            <div class="section-header">
+                <h2>Webnovel Unggulan</h2>
+                <p>Koleksi cerita terbaik dari The C Project</p>
+            </div>
+
+            <div class="novels-grid">
+                <!-- Novel 1: The Time I Never Knew (ONGOING) -->
+                <div class="novel-card reveal reveal-delay-1" data-novel="the-time-i-never-knew">
+                    <div class="novel-card-cover">
+                        <img src="img/thetimeineverknew.png" alt="The Time I Never Knew" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/7C5CFC/ffffff?text=The+Time+I+Never+Knew'">
+                        <span class="novel-card-badge">Berlangsung</span>
+                    </div>
+                    <div class="novel-card-body">
+                        <h3 class="novel-card-title">The Time I Never Knew</h3>
+                        <div class="novel-card-author"><i class="fas fa-user-edit"></i> Cahya.S</div>
+                        <div class="novel-card-tags">
+                            <span class="novel-card-tag">Drama</span>
+                            <span class="novel-card-tag">Romansa</span>
+                            <span class="novel-card-tag">Slice of Life</span>
+                        </div>
+                        <p class="novel-card-desc">Kisah emosional tentang menemukan kembali makna hidup di momen-momen yang tak terduga.</p>
+                        <div class="novel-card-actions">
+                            <button class="btn btn-primary btn-sm read-btn" data-novel="the-time-i-never-knew">
+                                <i class="fas fa-play"></i> Baca
+                            </button>
+                            <button class="btn btn-secondary btn-sm info-btn" data-novel="the-time-i-never-knew">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Novel 2: Behind The Portal (COMING SOON) -->
+                <div class="novel-card reveal reveal-delay-2" data-novel="behind-the-portal">
+                    <div class="novel-card-cover">
+                        <img src="img/behindtheportal.png" alt="Behind The Portal" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/FF6B8A/ffffff?text=Behind+The+Portal'">
+                        <span class="novel-card-badge soon">Segera</span>
+                    </div>
+                    <div class="novel-card-body">
+                        <h3 class="novel-card-title">Behind The Portal</h3>
+                        <div class="novel-card-author"><i class="fas fa-user-edit"></i> Cahya.S</div>
+                        <div class="novel-card-tags">
+                            <span class="novel-card-tag">Fantasi</span>
+                            <span class="novel-card-tag">Petualangan</span>
+                            <span class="novel-card-tag">Isekai</span>
+                        </div>
+                        <p class="novel-card-desc">Dua remaja terdampar di dunia penuh keajaiban setelah portal misterius membawa mereka ke dimensi lain.</p>
+                        <div class="novel-card-actions">
+                            <button class="btn btn-secondary btn-sm" disabled>
+                                <i class="fas fa-clock"></i> Segera
+                            </button>
+                            <button class="btn btn-secondary btn-sm info-btn" data-novel="behind-the-portal">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Novel 3: Unwanted Life (COMING SOON) -->
+                <div class="novel-card reveal reveal-delay-3" data-novel="unwanted-life">
+                    <div class="novel-card-cover">
+                        <img src="img/unwantedlife.png" alt="Unwanted Life" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/3DDC97/ffffff?text=Unwanted+Life'">
+                        <span class="novel-card-badge soon">Segera</span>
+                    </div>
+                    <div class="novel-card-body">
+                        <h3 class="novel-card-title">Unwanted Life</h3>
+                        <div class="novel-card-author"><i class="fas fa-user-edit"></i> Cahya.S</div>
+                        <div class="novel-card-tags">
+                            <span class="novel-card-tag">Psikologi</span>
+                            <span class="novel-card-tag">Drama</span>
+                            <span class="novel-card-tag">Thriller</span>
+                        </div>
+                        <p class="novel-card-desc">Thriller psikologis tentang bertahan hidup dan nilai kehidupan dalam keadaan ekstrem.</p>
+                        <div class="novel-card-actions">
+                            <button class="btn btn-secondary btn-sm" disabled>
+                                <i class="fas fa-clock"></i> Segera
+                            </button>
+                            <button class="btn btn-secondary btn-sm info-btn" data-novel="unwanted-life">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Novel 4: Unjudged (COMING SOON) -->
+                <div class="novel-card reveal reveal-delay-4" data-novel="unjudged">
+                    <div class="novel-card-cover">
+                        <img src="img/unjudged.png" alt="Unjudged" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/8A8A9D/ffffff?text=Unjudged'">
+                        <span class="novel-card-badge soon">Segera</span>
+                    </div>
+                    <div class="novel-card-body">
+                        <h3 class="novel-card-title">Unjudged</h3>
+                        <div class="novel-card-author"><i class="fas fa-user-edit"></i> Cahya.S</div>
+                        <div class="novel-card-tags">
+                            <span class="novel-card-tag">Drama</span>
+                            <span class="novel-card-tag">Kriminal</span>
+                            <span class="novel-card-tag">Thriller</span>
+                        </div>
+                        <p class="novel-card-desc">Kisah keadilan di luar sistem hukum. Di Jepang, hukum bekerja... tapi tidak selalu adil.</p>
+                        <div class="novel-card-actions">
+                            <button class="btn btn-secondary btn-sm" disabled>
+                                <i class="fas fa-clock"></i> Segera
+                            </button>
+                            <button class="btn btn-secondary btn-sm info-btn" data-novel="unjudged">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== COMMUNITY ===== -->
+        <section class="section" id="community">
+            <div class="section-header">
+                <h2>Gabung Komunitas</h2>
+                <p>Terhubung dengan sesama pembaca dan penulis</p>
+            </div>
+
+            <div class="community-grid">
+                <div class="community-card reveal reveal-delay-1">
+                    <span class="icon"><i class="fas fa-trophy"></i></span>
+                    <h3>Best Fans</h3>
+                    <p>Lihat peringkat pembaca teratas dan dapatkan reward eksklusif.</p>
+                    <a href="#" class="btn btn-secondary btn-sm">Lihat Ranking</a>
+                </div>
+                <div class="community-card reveal reveal-delay-2">
+                    <span class="icon"><i class="fas fa-comments"></i></span>
+                    <h3>Forum Diskusi</h3>
+                    <p>Bagikan teori, diskusikan chapter, dan temukan teman baru.</p>
+                    <a href="#" class="btn btn-secondary btn-sm">Gabung</a>
+                </div>
+                <div class="community-card reveal reveal-delay-3">
+                    <span class="icon"><i class="fas fa-heart"></i></span>
+                    <h3>Dukung Kami</h3>
+                    <p>Bantu kami terus berkarya dengan dukunganmu.</p>
+                    <a href="#" class="btn btn-secondary btn-sm">Dukung</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>The C Project</h4>
+                    <p>Platform webnovel orisinal dari penulis Indonesia.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Tautan</h4>
+                    <a href="#novels">Webnovel</a>
+                    <a href="#community">Komunitas</a>
+                    <a href="#">Tentang</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Copyright</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Media</h4>
+                    <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Kontak</a>
+                    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 The C Project. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== BOTTOM NAV (MOBILE) ===== -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="#home" class="bottom-nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="#novels" class="bottom-nav-item">
+                <i class="fas fa-book"></i>
+                <span>Novel</span>
+            </a>
+            <a href="#community" class="bottom-nav-item">
+                <i class="fas fa-users"></i>
+                <span>Komunitas</span>
+            </a>
+            <button class="bottom-nav-item" id="bottomThemeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Mode</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== NOVEL INFO POPUP ===== -->
+    <div class="popup-overlay" id="infoPopup">
+        <div class="popup">
+            <div class="popup-header">
+                <h3><i class="fas fa-book" style="color: var(--primary);"></i> <span id="infoTitle">Judul Novel</span></h3>
+                <button class="popup-close" id="closeInfoPopup"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-body" id="infoBody">
+                <p style="color: var(--text-muted);"><strong>Penulis:</strong> <span id="infoAuthor">Cahya.S</span></p>
+                <p style="color: var(--text-muted);"><strong>Status:</strong> <span id="infoStatus">Berlangsung</span></p>
+                <div id="infoDescription">
+                    <p>Deskripsi novel akan muncul di sini.</p>
+                </div>
+            </div>
+            <div class="popup-actions">
+                <button class="btn btn-primary" id="infoReadBtn"><i class="fas fa-play"></i> Baca</button>
+                <button class="btn btn-secondary" id="closeInfoBtn">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         LETTER POPUP — WELCOME MESSAGE
+    ============================================================ -->
+    <div class="letter-overlay" id="letterOverlay">
+        <div class="letter-box" id="letterBox">
+            <div class="letter-seal">💌</div>
+
+            <div class="letter-header">
+                <div class="letter-to">Untuk</div>
+                <div class="letter-name">Pembaca Pertama</div>
+            </div>
+
+            <div class="letter-divider">✦ ✦ ✦</div>
+
+            <div class="letter-body">
+                <p><em class="em">Untuk kamu, pembaca pertama The C Project.</em></p>
+
+                <p>Kalau kamu membaca tulisan ini, berarti akhirnya cerita yang selama ini cuma ada di kepala dan folder penulisnya berhasil sampai juga ke tanganmu.</p>
+
+                <p>Jujur, agak lucu juga.</p>
+
+                <p>Dari sekian banyak orang yang mungkin suatu hari menemukan cerita ini, kamu justru jadi orang pertama yang benar-benar menunggu.</p>
+
+                <p>Jadi, <span class="highlight">selamat datang</span>.</p>
+
+                <p>Nikmati ceritanya, nikmati setiap hal kecil yang ada di dalamnya, dan kalau nanti kamu menemukan bagian yang kamu suka, jangan lupa bilang ke penulisnya.</p>
+
+                <p>Karena mungkin, ada seseorang di balik layar yang diam-diam senang setiap kali kamu bilang,</p>
+
+                <p><span class="bold-line">"Aku suka."</span></p>
+
+                <p>Selamat membaca.</p>
+
+                <p>Dan jangan pergi terlalu jauh.</p>
+
+                <p><span class="highlight">The C Project baru saja dimulai.</span></p>
+            </div>
+
+            <div class="letter-signature">
+                <div class="letter-signature-avatar">C</div>
+                <div class="letter-signature-text">
+                    <span class="from">Dengan hangat,</span>
+                    <span class="name">Cahya</span>
+                </div>
+            </div>
+
+            <div class="letter-footer">
+                <div class="letter-countdown-text" id="letterCountdownText">
+                    <i class="fas fa-hourglass-half" style="color: #FFD166; margin-right: 4px;"></i>
+                    Pesan bisa ditutup dalam <span class="timer" id="letterTimer">6</span> detik...
+                </div>
+
+                <div class="letter-progress-bar">
+                    <div class="letter-progress-fill" id="letterProgressFill"></div>
+                </div>
+
+                <button class="letter-close-btn" id="letterCloseBtn" disabled>
+                    <i class="fas fa-lock"></i>
+                    <span id="letterCloseBtnText">Tunggu sebentar...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        //  DATA NOVELS
+        // ============================================================
+        const NOVELS = {
+            'the-time-i-never-knew': {
+                title: 'The Time I Never Knew',
+                author: 'Cahya.S',
+                status: 'Berlangsung',
+                description: `<p>Kisah emosional yang mendalam tentang menemukan kembali momen-momen hidup dan menemukan makna di tempat yang tak terduga. Ikuti perjalanan seorang karakter yang belajar menghargai kebahagiaan sederhana dalam hidup sambil menghadapi tantangan pribadi dan pertemuan yang tak terduga.</p>`,
+                link: 'beranda/thetimeineverknew/index.html',
+                available: true
+            },
+            'behind-the-portal': {
+                title: 'Behind The Portal',
+                author: 'Cahya.S',
+                status: 'Segera Hadir',
+                description: `<p>Dua remaja biasa—Ayha, korban perundungan yang menutup diri dari dunia, dan Zerq, mantan petinju yang kehilangan masa lalunya—hidup di dunia modern tanpa pernah menyadari bahwa di luar langit mereka, ada celah menuju dunia lain.</p>
+                <p>Ketika iblis kegelapan Nyxar menerobos realitas dan mengambil alih tubuh Ayha, dunia modern mereka menjadi medan perburuan antara makhluk terang dan gelap. Sementara itu, Resygn, seorang pria tua misterius dengan tongkat sihir, melintasi dimensi untuk menangkap Nyxar dan mengembalikan keseimbangan.</p>
+                <p>Namun, upaya Resygn gagal. Portal interdimensi yang seharusnya tertutup malah menyedot segalanya—termasuk Ayha dan Zerq. Kini mereka terdampar di dunia penuh keajaiban dan misteri, tanpa kekuatan, tanpa arah, dan tanpa jalan pulang.</p>
+                <p>Di dunia baru ini, mereka harus belajar bertahan hidup, menghadapi sisi gelap mereka sendiri, dan menemukan makna sebenarnya dari kekuatan yang mereka miliki... karena mungkin saja, portal itu tidak terbuka secara kebetulan.</p>`,
+                link: null,
+                available: false
+            },
+            'unwanted-life': {
+                title: 'Unwanted Life',
+                author: 'Cahya.S',
+                status: 'Segera Hadir',
+                description: `<p>Thriller psikologis yang menegangkan tentang bertahan hidup, pilihan, dan nilai kehidupan dalam keadaan sulit. Jelajahi hubungan kompleks dan dilema moral yang dihadapi karakter dalam situasi ekstrem di mana setiap keputusan bisa berarti hidup atau mati.</p>`,
+                link: null,
+                available: false
+            },
+            'unjudged': {
+                title: 'Unjudged',
+                author: 'Cahya.S',
+                status: 'Segera Hadir',
+                description: `<p>Di Jepang, hukum bekerja… tapi tidak selalu adil.</p>
+                <p>Kanzaki Ren tumbuh dengan satu janji sederhana: kejahatan harus dibasmi. Janji yang ia buat bersama seorang teman masa kecil—sebelum waktu, ambisi, dan realita memisahkan mereka.</p>
+                <p>Bertahun-tahun kemudian, Ren hanyalah siswa pendiam. Berkali-kali gagal masuk kepolisian meski telah mengorbankan masa mudanya untuk latihan dan ujian. Sementara temannya, Nara, berhasil menjadi polisi—dingin, profesional, dan jauh dari anak yang dulu ia kenal.</p>
+                <p>Ketika sistem hukum membiarkan pelaku kejahatan lolos karena status, koneksi, dan "rekam jejak baik", Ren mulai menyadari satu hal: tidak semua keadilan bisa ditegakkan dari balik lencana.</p>
+                <p>Ia bukan pahlawan.<br>Ia bukan penjahat.<br>Ia adalah seseorang yang bertindak… tanpa penghakiman.</p>`,
+                link: null,
+                available: false
+            }
+        };
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        let currentNovel = null;
+        let letterInterval = null;
+        let letterCanClose = false;
+
+        // ============================================================
+        //  THEME
+        // ============================================================
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+            document.querySelectorAll('#themeToggle, #bottomThemeToggle').forEach(btn => {
+                const i = btn.querySelector('i');
+                if (i) i.className = `fas ${icon}`;
+            });
+        }
+
+        function toggleTheme() {
+            const next = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            showToast(next === 'dark' ? '🌙 Mode Gelap' : '☀️ Mode Terang');
+        }
+
+        // ============================================================
+        //  TOAST
+        // ============================================================
+        function showToast(msg) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.textContent = msg;
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.classList.add('out');
+                setTimeout(() => el.remove(), 400);
+            }, 2500);
+        }
+
+        // ============================================================
+        //  INFO POPUP
+        // ============================================================
+        function openPopup(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePopup(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showInfo(novelId) {
+            const data = NOVELS[novelId];
+            if (!data) return;
+
+            currentNovel = novelId;
+            document.getElementById('infoTitle').textContent = data.title;
+            document.getElementById('infoAuthor').textContent = data.author;
+            document.getElementById('infoStatus').textContent = data.status;
+            document.getElementById('infoDescription').innerHTML = data.description;
+
+            const readBtn = document.getElementById('infoReadBtn');
+            if (data.available) {
+                readBtn.innerHTML = '<i class="fas fa-play"></i> Baca';
+                readBtn.disabled = false;
+                readBtn.onclick = () => {
+                    closePopup('infoPopup');
+                    handleRead(novelId);
+                };
+            } else {
+                readBtn.innerHTML = '<i class="fas fa-clock"></i> Segera';
+                readBtn.disabled = true;
+            }
+
+            openPopup('infoPopup');
+        }
+
+        // ============================================================
+        //  READ HANDLER
+        // ============================================================
+        function handleRead(novelId) {
+            const data = NOVELS[novelId];
+            if (!data || !data.available) {
+                showToast('📖 Webnovel ini akan segera hadir!');
+                return;
+            }
+
+            if (data.link) {
+                window.location.href = data.link;
+            }
+        }
+
+        // ============================================================
+        //  SCROLL ANIMATIONS
+        // ============================================================
+        function initReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // ============================================================
+        //  BOTTOM NAV
+        // ============================================================
+        function initBottomNav() {
+            const items = document.querySelectorAll('.bottom-nav-item');
+            const sections = ['home', 'novels', 'community'];
+
+            items.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        let active = 'home';
+                        for (const id of sections) {
+                            const el = document.getElementById(id);
+                            if (el) {
+                                const rect = el.getBoundingClientRect();
+                                if (rect.top <= 100) active = id;
+                            }
+                        }
+                        items.forEach(item => {
+                            const href = item.getAttribute('href');
+                            if (href) item.classList.toggle('active', href === `#${active}`);
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+
+        // ============================================================
+        //  LETTER POPUP — WELCOME MESSAGE
+        // ============================================================
+        const LETTER_CONFIG = {
+            COUNTDOWN_SECONDS: 6
+        };
+
+        function showLetter() {
+            const overlay = document.getElementById('letterOverlay');
+            if (!overlay) return;
+
+            document.body.style.overflow = 'hidden';
+            overlay.classList.add('active');
+
+            startLetterCountdown();
+        }
+
+        function startLetterCountdown() {
+            const timerEl = document.getElementById('letterTimer');
+            const progressFill = document.getElementById('letterProgressFill');
+            const closeBtn = document.getElementById('letterCloseBtn');
+            const closeBtnText = document.getElementById('letterCloseBtnText');
+            const countdownText = document.getElementById('letterCountdownText');
+
+            if (!timerEl || !progressFill || !closeBtn) return;
+
+            let remaining = LETTER_CONFIG.COUNTDOWN_SECONDS;
+            letterCanClose = false;
+
+            timerEl.textContent = remaining;
+            timerEl.classList.remove('done');
+            progressFill.style.width = '0%';
+            closeBtn.classList.remove('ready');
+            closeBtn.disabled = true;
+            closeBtn.querySelector('i').className = 'fas fa-lock';
+            closeBtnText.textContent = 'Tunggu sebentar...';
+
+            if (letterInterval) clearInterval(letterInterval);
+
+            letterInterval = setInterval(() => {
+                remaining--;
+                timerEl.textContent = remaining > 0 ? remaining : '0';
+
+                const progress = ((LETTER_CONFIG.COUNTDOWN_SECONDS - remaining) /
+                                 LETTER_CONFIG.COUNTDOWN_SECONDS) * 100;
+                progressFill.style.width = progress + '%';
+
+                if (remaining <= 0) {
+                    clearInterval(letterInterval);
+                    letterInterval = null;
+                    letterCanClose = true;
+
+                    timerEl.textContent = '✓';
+                    timerEl.classList.add('done');
+                    progressFill.style.width = '100%';
+
+                    closeBtn.classList.add('ready');
+                    closeBtn.disabled = false;
+                    closeBtn.querySelector('i').className = 'fas fa-envelope-open-text';
+                    closeBtnText.textContent = 'Tutup & Mulai Membaca';
+
+                    if (countdownText) {
+                        countdownText.innerHTML =
+                            '<i class="fas fa-check-circle" style="color: var(--accent); margin-right: 4px;"></i>' +
+                            'Sekarang kamu bisa menutup pesan ini ✨';
+                    }
+                }
+            }, 1000);
+        }
+
+        function closeLetter() {
+            if (!letterCanClose) return;
+
+            const overlay = document.getElementById('letterOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            if (letterInterval) {
+                clearInterval(letterInterval);
+                letterInterval = null;
+            }
+
+            setTimeout(() => {
+                showToast('💛 Selamat membaca! ✨');
+            }, 300);
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        function init() {
+            console.log('🚀 The C Project initialized');
+
+            // Theme
+            applyTheme(currentTheme);
+
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('bottomThemeToggle').addEventListener('click', toggleTheme);
+
+            // Info popup
+            document.getElementById('closeInfoPopup').addEventListener('click', () => closePopup('infoPopup'));
+            document.getElementById('closeInfoBtn').addEventListener('click', () => closePopup('infoPopup'));
+            document.getElementById('infoPopup').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closePopup('infoPopup');
+            });
+
+            // Hero read button
+            document.getElementById('heroReadBtn').addEventListener('click', () => {
+                handleRead('the-time-i-never-knew');
+            });
+
+            // Novel cards - Read buttons
+            document.querySelectorAll('.read-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleRead(btn.dataset.novel);
+                });
+            });
+
+            // Novel cards - Info buttons
+            document.querySelectorAll('.info-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showInfo(btn.dataset.novel);
+                });
+            });
+
+            // Novel cards - click card for info
+            document.querySelectorAll('.novel-card').forEach(card => {
+                card.addEventListener('click', () => showInfo(card.dataset.novel));
+            });
+
+            // Letter close button
+            const letterCloseBtn = document.getElementById('letterCloseBtn');
+            if (letterCloseBtn) {
+                letterCloseBtn.addEventListener('click', closeLetter);
+            }
+
+            // Escape key — cegah close letter sebelum waktunya
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const letterOverlay = document.getElementById('letterOverlay');
+                    if (letterOverlay && letterOverlay.classList.contains('active')) {
+                        if (!letterCanClose) {
+                            showToast('⏳ Tunggu sebentar lagi...');
+                            return;
+                        } else {
+                            closeLetter();
+                            return;
+                        }
+                    }
+                    closePopup('infoPopup');
+                }
+            });
+
+            // Prevent overlay click closing letter
+            const letterOverlay = document.getElementById('letterOverlay');
+            if (letterOverlay) {
+                letterOverlay.addEventListener('click', (e) => {
+                    if (e.target === letterOverlay && !letterCanClose) {
+                        letterOverlay.animate(
+                            [
+                                { transform: 'translateX(0)' },
+                                { transform: 'translateX(-6px)' },
+                                { transform: 'translateX(6px)' },
+                                { transform: 'translateX(-4px)' },
+                                { transform: 'translateX(4px)' },
+                                { transform: 'translateX(0)' }
+                            ],
+                            { duration: 400, easing: 'ease-in-out' }
+                        );
+                    }
+                });
+            }
+
+            // Scroll animations
+            initReveal();
+
+            // Bottom nav
+            initBottomNav();
+
+            // Letter popup — muncul untuk semua pengunjung (sekali per sesi)
+            if (!sessionStorage.getItem('letterShown')) {
+                setTimeout(() => {
+                    showLetter();
+                    sessionStorage.setItem('letterShown', 'true');
+                }, 700);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
