@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Bab 5 — Kehidupan yang Bukan Milikku | The Time I Never Knew</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/thecproject.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <style>
+        /* ============================================================
+               ROOT VARIABLES & RESET
+            ============================================================ */
+        :root {
+            --primary: #7C5CFC;
+            --primary-dark: #5B3FD4;
+            --primary-light: #A084FF;
+            --secondary: #FF6B8A;
+            --accent: #3DDC97;
+            --gold: #FFD166;
+            --bg-dark: #0B0B1A;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8A8C8;
+            --text-muted: #6B6B8D;
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.2);
+            
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Lora', Georgia, serif;
+            --font-hand: 'Caveat', cursive;
+            
+            --bottom-nav-height: 64px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.no-scroll { overflow: hidden; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+        /* ============================================================
+               PROGRESS BAR BACAAN
+            ============================================================ */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 9999;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(124, 92, 252, 0.5);
+        }
+
+        /* ============================================================
+               APP WRAPPER & AMBIENT
+            ============================================================ */
+        .app {
+            min-height: 100vh;
+            position: relative;
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.04) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; background: var(--primary); opacity: 0.08; }
+        .orb-2 { width: 300px; height: 300px; bottom: 100px; left: -50px; background: var(--secondary); opacity: 0.06; }
+        .orb-3 { width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent); opacity: 0.04; }
+
+        /* ============================================================
+               HEADER
+            ============================================================ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 16px;
+            background: rgba(11, 11, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) { .header { padding: 14px 24px; } }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .header-back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) { .header-back-btn { width: 40px; height: 40px; font-size: 15px; } }
+
+        .header-back-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: translateX(-3px);
+        }
+
+        .header-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        @media (min-width: 768px) { .header-title { font-size: 15px; } }
+
+        .header-title .chapter-num {
+            color: var(--primary-light);
+            font-weight: 800;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) { .header-btn { width: 40px; height: 40px; font-size: 15px; } }
+
+        .header-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+               MAIN CONTENT
+            ============================================================ */
+        .main-content {
+            padding: 24px 16px calc(var(--bottom-nav-height) + 40px);
+            max-width: 760px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                padding: 40px 24px 80px;
+            }
+        }
+
+        /* ============================================================
+               CHAPTER HEADER
+            ============================================================ */
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        @media (min-width: 768px) { .chapter-header { margin-bottom: 40px; padding-bottom: 32px; } }
+
+        .chapter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            background: rgba(124, 92, 252, 0.12);
+            border: 1px solid rgba(124, 92, 252, 0.2);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+        }
+
+        .chapter-badge i { font-size: 10px; }
+
+        .chapter-title {
+            font-size: clamp(1.6rem, 5vw, 2.6rem);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 60%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chapter-subtitle span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chapter-subtitle i { color: var(--primary); font-size: 11px; }
+
+        /* ============================================================
+               CHAPTER BODY
+            ============================================================ */
+        .chapter-body {
+            font-family: var(--font-serif);
+            font-size: 16.5px;
+            line-height: 2;
+            color: var(--text-secondary);
+            letter-spacing: 0.1px;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body {
+                font-size: 18px;
+                line-height: 2.05;
+            }
+        }
+
+        .chapter-body p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body p { margin-bottom: 24px; }
+        }
+
+        .chapter-body p:last-child { margin-bottom: 0; }
+
+        /* Dialogue styling */
+        .chapter-body .dialogue {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Special emphasis */
+        .chapter-body .em {
+            color: var(--primary-light);
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .chapter-body .bold-em {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Standalone emphasis line (centered, bigger) */
+        .chapter-body .standalone-line {
+            text-align: center;
+            font-size: 1.15em;
+            color: var(--gold);
+            font-weight: 500;
+            font-style: italic;
+            padding: 8px 0;
+            letter-spacing: 0.5px;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .standalone-line { font-size: 1.25em; padding: 12px 0; }
+        }
+
+        /* Quote/italic line */
+        .chapter-body .quote-line {
+            font-style: italic;
+            color: var(--primary-light);
+            padding: 8px 20px;
+            border-left: 3px solid rgba(124, 92, 252, 0.3);
+            margin: 20px 0;
+            background: rgba(124, 92, 252, 0.04);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .quote-line { padding: 12px 24px; }
+        }
+
+        /* Internal thought (italic) */
+        .chapter-body .thought {
+            font-style: italic;
+            color: var(--primary-light);
+            opacity: 0.9;
+        }
+
+        /* Section divider */
+        .chapter-body .divider {
+            text-align: center;
+            color: rgba(255, 209, 102, 0.4);
+            font-size: 14px;
+            letter-spacing: 8px;
+            padding: 20px 0;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .divider { padding: 28px 0; letter-spacing: 12px; }
+        }
+
+        /* Scene break */
+        .chapter-body .scene-break {
+            text-align: center;
+            color: rgba(124, 92, 252, 0.4);
+            font-size: 16px;
+            letter-spacing: 12px;
+            padding: 24px 0;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .scene-break { padding: 32px 0; letter-spacing: 16px; }
+        }
+
+        /* Drop cap untuk paragraf pertama */
+        .chapter-body p:first-of-type::first-letter {
+            font-family: var(--font-serif);
+            font-size: 3.5em;
+            font-weight: 700;
+            float: left;
+            line-height: 0.9;
+            padding: 6px 12px 0 0;
+            color: var(--primary-light);
+            text-shadow: 0 0 30px rgba(124, 92, 252, 0.4);
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body p:first-of-type::first-letter {
+                font-size: 4em;
+                padding: 8px 14px 0 0;
+            }
+        }
+
+        /* ============================================================
+               AUTHOR'S NOTE — SURAT PENUTUP
+            ============================================================ */
+        .author-note {
+            margin-top: 56px;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg,
+                rgba(20, 15, 35, 0.98) 0%,
+                rgba(30, 20, 50, 0.98) 100%);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 100px rgba(255, 209, 102, 0.12),
+                inset 0 0 60px rgba(124, 92, 252, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .author-note { border-radius: var(--radius-xl); margin-top: 72px; }
+        }
+
+        .author-note::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 209, 102, 0.4);
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 8px;
+            pointer-events: none;
+        }
+
+        .author-note::after {
+            content: "";
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 209, 102, 0.4);
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 8px;
+            pointer-events: none;
+        }
+
+        .author-note-inner {
+            padding: 32px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .author-note-inner { padding: 48px 44px; }
+        }
+
+        .author-note-seal {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD166, #ff9f1c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #1A1A2E;
+            box-shadow:
+                0 8px 30px rgba(255, 209, 102, 0.4),
+                inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            animation: sealPulse 2.5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes sealPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 30px rgba(255, 209, 102, 0.4), inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 12px 40px rgba(255, 209, 102, 0.65), inset 0 -3px 8px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .author-note-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .author-note-label {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #FFD166;
+            padding: 6px 18px;
+            border: 1px dashed rgba(255, 209, 102, 0.4);
+            border-radius: 50px;
+            margin-bottom: 14px;
+        }
+
+        .author-note-to {
+            font-family: var(--font-hand);
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD166 0%, #FF6B8A 50%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 20px rgba(255, 209, 102, 0.3));
+        }
+
+        .author-note-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 22px 0;
+            color: rgba(255, 209, 102, 0.6);
+            font-size: 10px;
+            letter-spacing: 6px;
+        }
+
+        .author-note-divider::before,
+        .author-note-divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(255, 209, 102, 0.4), transparent);
+        }
+
+        .author-note-body {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 15px;
+            line-height: 1.9;
+            font-weight: 400;
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .author-note-body { font-size: 16px; line-height: 2; }
+        }
+
+        .author-note-body p {
+            margin-bottom: 16px;
+        }
+
+        .author-note-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .author-note-body .highlight { color: #FFD166; font-weight: 700; }
+        .author-note-body .em { color: var(--primary-light); font-style: italic; font-weight: 500; }
+
+        .author-note-body .bold-line {
+            font-family: var(--font-hand);
+            font-weight: 700;
+            color: #FFD166;
+            font-size: 24px;
+            display: block;
+            text-align: center;
+            padding: 10px 0;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        @media (min-width: 768px) {
+            .author-note-body .bold-line { font-size: 28px; padding: 14px 0; }
+        }
+
+        .author-note-body .thank-list {
+            font-family: var(--font-hand);
+            font-size: 22px;
+            color: #FFD166;
+            text-align: center;
+            line-height: 1.5;
+            padding: 12px 0;
+            font-weight: 700;
+        }
+
+        @media (min-width: 768px) {
+            .author-note-body .thank-list { font-size: 26px; }
+        }
+
+        .author-note-signature {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px dashed rgba(255, 209, 102, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+        }
+
+        .author-note-signature-text {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .author-note-signature-text .from {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .author-note-signature-text .name {
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            color: #FFD166;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .author-note-signature-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: white;
+            border: 2px solid rgba(255, 209, 102, 0.5);
+            box-shadow: 0 6px 24px rgba(124, 92, 252, 0.4);
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+               CHAPTER NAVIGATION
+            ============================================================ */
+        .chapter-nav {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        @media (min-width: 768px) { .chapter-nav { margin-top: 56px; padding-top: 40px; } }
+
+        .chapter-nav-label {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .chapter-nav-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .chapter-nav-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .nav-chapter-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            min-height: 80px;
+        }
+
+        @media (min-width: 768px) { .nav-chapter-btn { padding: 20px 24px; border-radius: var(--radius-lg); } }
+
+        .nav-chapter-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-chapter-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 8px 30px rgba(124, 92, 252, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .nav-chapter-btn:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-chapter-btn.next {
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.08), rgba(255, 107, 138, 0.06));
+            border-color: rgba(124, 92, 252, 0.2);
+        }
+
+        .nav-chapter-btn.next:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 40px rgba(124, 92, 252, 0.3);
+        }
+
+        .nav-chapter-btn.next::before {
+            background: linear-gradient(180deg, var(--secondary), var(--gold));
+        }
+
+        .nav-btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(124, 92, 252, 0.12);
+            border: 1px solid rgba(124, 92, 252, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 15px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .nav-chapter-btn.next .nav-btn-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.4);
+        }
+
+        .nav-chapter-btn:hover .nav-btn-icon {
+            transform: scale(1.08);
+        }
+
+        .nav-btn-text {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .nav-btn-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .nav-chapter-btn.next .nav-btn-label {
+            color: var(--secondary);
+        }
+
+        .nav-btn-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) { .nav-btn-title { font-size: 16px; } }
+
+        /* ============================================================
+               END OF VOLUME
+            ============================================================ */
+        .end-volume {
+            margin-top: 40px;
+            padding: 40px 24px;
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.08), rgba(255, 107, 138, 0.05));
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) { .end-volume { padding: 48px 40px; } }
+
+        .end-volume::before {
+            content: "✦ ✦ ✦";
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 209, 102, 0.4);
+            font-size: 10px;
+            letter-spacing: 6px;
+        }
+
+        .end-volume-icon {
+            font-size: 2.8rem;
+            margin-bottom: 14px;
+            animation: end-icon-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes end-icon-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .end-volume-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 768px) { .end-volume-title { font-size: 22px; } }
+
+        .end-volume-text {
+            font-family: var(--font-serif);
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-style: italic;
+            max-width: 480px;
+            margin: 0 auto 22px;
+        }
+
+        @media (min-width: 768px) {
+            .end-volume-text { font-size: 17px; }
+        }
+
+        .end-volume-text .em {
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .btn-lanjut {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 28px rgba(124, 92, 252, 0.4);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) { .btn-lanjut { font-size: 15px; padding: 16px 40px; } }
+
+        .btn-lanjut:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 40px rgba(124, 92, 252, 0.6);
+        }
+
+        .btn-lanjut i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-lanjut:hover i {
+            transform: translateX(4px);
+        }
+
+        /* ============================================================
+               FOOTER
+            ============================================================ */
+        .footer {
+            padding: 30px 16px 20px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) { .footer { padding: 40px 24px 24px; } }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @media (min-width: 768px) { .footer-text { font-size: 13px; } }
+
+        .footer-text .brand {
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================================
+               BOTTOM NAV — MOBILE
+            ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(11, 11, 26, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-light);
+            z-index: 99;
+            display: none;
+            padding: 0 8px;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        @media (max-width: 1023px) {
+            .bottom-nav { display: block; }
+        }
+
+        .bottom-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            height: 100%;
+            align-items: center;
+            gap: 4px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 6px 4px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: var(--font);
+            border-radius: var(--radius-sm);
+            position: relative;
+        }
+
+        .bottom-nav-item i {
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .bottom-nav-item:hover,
+        .bottom-nav-item.active {
+            color: var(--primary-light);
+        }
+
+        .bottom-nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+        /* ============================================================
+               SIDEBAR DRAWER
+            ============================================================ */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1001;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background: var(--bg-dark);
+            border-right: 1px solid var(--border-light);
+            z-index: 1002;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar-brand-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+        }
+
+        .sidebar-brand-text {
+            font-size: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-close {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 50%;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 107, 138, 0.15);
+            color: var(--secondary);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px 20px;
+            overflow-y: auto;
+        }
+
+        .nav-section { margin-bottom: 6px; }
+
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            padding: 14px 14px 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            font-family: var(--font);
+            text-align: left;
+        }
+
+        .nav-link i {
+            width: 20px;
+            font-size: 15px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link:hover {
+            background: rgba(124, 92, 252, 0.08);
+            color: var(--primary-light);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: rgba(124, 92, 252, 0.12);
+            color: var(--primary-light);
+            border-left: 3px solid var(--primary);
+        }
+
+        .nav-link.sub {
+            font-size: 13px;
+            padding-left: 24px;
+            font-weight: 500;
+        }
+
+        .nav-link.sub i {
+            font-size: 12px;
+            width: 16px;
+        }
+
+        /* ============================================================
+               TOAST
+            ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: calc(var(--bottom-nav-height) + 20px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 22px;
+            border-radius: 50px;
+            background: rgba(11, 11, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
+            z-index: 2000;
+            animation: toastIn 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) { .toast { bottom: 30px; } }
+
+        .toast.out { animation: toastOut 0.4s ease forwards; }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+        }
+
+        /* ============================================================
+               SCROLL REVEAL
+            ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ============================================================
+               DARK / LIGHT MODE
+            ============================================================ */
+        [data-theme="light"] {
+            --bg-dark: #F5F3EF;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-card-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #1A1A2E;
+            --text-secondary: #3A3A5A;
+            --text-muted: #7A7A9A;
+            --border-light: rgba(0, 0, 0, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.15);
+        }
+
+        [data-theme="light"] .app {
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.04) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.03) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        [data-theme="light"] .header { background: rgba(245, 243, 239, 0.85); }
+        [data-theme="light"] .bottom-nav { background: rgba(245, 243, 239, 0.92); }
+        [data-theme="light"] .sidebar { background: #FFFFFF; }
+        [data-theme="light"] .toast { background: rgba(245, 243, 239, 0.95); color: var(--text-primary); }
+        [data-theme="light"] .chapter-title {
+            background: linear-gradient(135deg, #1A1A2E 0%, var(--primary) 60%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .chapter-body { color: #3A3A5A; }
+        [data-theme="light"] .chapter-body .standalone-line { color: #B8860B; }
+        [data-theme="light"] .chapter-body .bold-em { color: #B8860B; }
+        [data-theme="light"] .chapter-body .quote-line { color: var(--primary); background: rgba(124, 92, 252, 0.06); }
+        [data-theme="light"] .author-note {
+            background: linear-gradient(160deg, #FFFBF0 0%, #FFF5F8 100%);
+            border-color: rgba(255, 209, 102, 0.5);
+        }
+        [data-theme="light"] .author-note-body { color: #3A3A5A; }
+        [data-theme="light"] .author-note-body .highlight { color: #B8860B; }
+        [data-theme="light"] .author-note-body .em { color: var(--primary); }
+        [data-theme="light"] .author-note-body .bold-line { color: #B8860B; }
+        [data-theme="light"] .author-note-body .thank-list { color: #B8860B; }
+        [data-theme="light"] .author-note-to {
+            background: linear-gradient(135deg, #B8860B 0%, #D6336C 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .author-note-signature-text .name { color: #B8860B; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== READING PROGRESS BAR ===== -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- ===== AMBIENT ORBS ===== -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ===== APP ===== -->
+    <div class="app">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <a href="The Time I Never Knew.html" class="header-back">
+                <span class="header-back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="header-title">
+                    <span class="chapter-num">Bab 5</span> · Kehidupan yang Bukan Milikku
+                </span>
+            </a>
+            <div class="header-actions">
+                <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="header-btn" id="menuToggle" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
+
+            <!-- ===== CHAPTER HEADER ===== -->
+            <div class="chapter-header reveal">
+                <div class="chapter-badge">
+                    <i class="fas fa-bookmark"></i> Bab 5
+                </div>
+                <h1 class="chapter-title">Kehidupan yang Bukan Milikku</h1>
+                <div class="chapter-subtitle">
+                    <span><i class="fas fa-book"></i> Volume 1</span>
+                    <span>·</span>
+                    <span><i class="fas fa-clock"></i> ~10 menit baca</span>
+                </div>
+            </div>
+
+            <!-- ===== CHAPTER BODY ===== -->
+            <article class="chapter-body" id="chapterBody">
+
+                <p>Pagi berikutnya—</p>
+
+                <p>Ryou membuka mata.</p>
+
+                <p>Langit-langit putih.</p>
+
+                <p>Ia mengerjapkan mata beberapa kali.</p>
+
+                <p>Bukan kamarnya.</p>
+
+                <p>Ryou langsung bangun.</p>
+
+                <p><span class="dialogue">"...Hah?"</span></p>
+
+                <p>Ia melihat sekeliling.</p>
+
+                <p>Tempat tidur yang bukan miliknya.</p>
+
+                <p>Meja yang bukan miliknya.</p>
+
+                <p>Lemari yang bukan miliknya.</p>
+
+                <p>Bahkan warna dindingnya pun berbeda.</p>
+
+                <p>Ryou mengusap wajah.</p>
+
+                <p><span class="dialogue">"Ini di mana?"</span></p>
+
+                <p>Ia mencoba mengingat.</p>
+
+                <p>Semalam ia tidur di kamarnya.</p>
+
+                <p>Ia masih ingat kertas yang diletakkannya di meja.</p>
+
+                <p>Empat hal.</p>
+
+                <p>Cari kerja.</p>
+
+                <p>Olahraga.</p>
+
+                <p>Bantu Ibu.</p>
+
+                <p>Ngobrol dengan Ayah.</p>
+
+                <p>Dan di bawah semuanya ada satu kata.</p>
+
+                <p><span class="bold-em">Besok.</span></p>
+
+                <p>Setelah itu ia tidur.</p>
+
+                <p>Lalu sekarang—</p>
+
+                <p>Ia berada di tempat asing.</p>
+
+                <p><span class="dialogue">"Jangan-jangan aku ketiduran di rumah orang?"</span></p>
+
+                <p>Ryou melihat sekeliling sekali lagi.</p>
+
+                <p>Tidak masuk akal.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Pintu kamar tiba-tiba terbuka.</p>
+
+                <p>Seorang perempuan masuk sambil membawa pakaian.</p>
+
+                <p><span class="dialogue">"Haruto, kamu sudah bangun?"</span></p>
+
+                <p>Ryou membeku.</p>
+
+                <p>Perempuan itu berjalan mendekat.</p>
+
+                <p><span class="dialogue">"Kamu tidur sampai siang lagi?"</span></p>
+
+                <p>Ryou menatapnya.</p>
+
+                <p>Perempuan itu tersenyum.</p>
+
+                <p>Ryou menunjuk dirinya sendiri.</p>
+
+                <p><span class="dialogue">"...Saya?"</span></p>
+
+                <p>Perempuan itu berhenti.</p>
+
+                <p><span class="dialogue">"Iya. Kamu."</span></p>
+
+                <p>Ryou menatap perempuan itu dari atas sampai bawah.</p>
+
+                <p>Kemudian berbisik,</p>
+
+                <p><span class="dialogue">"Siapa ibu ini?"</span></p>
+
+                <p>Perempuan itu mengernyit.</p>
+
+                <p><span class="dialogue">"Apa?"</span></p>
+
+                <p>Ryou langsung berdiri.</p>
+
+                <p><span class="dialogue">"Bukan, maksud saya—"</span></p>
+
+                <p>Ia berhenti.</p>
+
+                <p>Tidak tahu harus berkata apa.</p>
+
+                <p>Perempuan itu semakin bingung.</p>
+
+                <p><span class="dialogue">"Haruto?"</span></p>
+
+                <p>Ryou mundur sedikit.</p>
+
+                <p><span class="dialogue">"Maaf, tapi..."</span></p>
+
+                <p>Ia menunjuk pintu.</p>
+
+                <p><span class="dialogue">"Ini rumah siapa?"</span></p>
+
+                <p>Perempuan itu terdiam.</p>
+
+                <p><span class="dialogue">"Rumah kita."</span></p>
+
+                <p>Ryou mematung.</p>
+
+                <p><span class="dialogue">"...Apa?"</span></p>
+
+                <p><span class="dialogue">"Haruto, kamu tidak apa-apa?"</span></p>
+
+                <p>Ryou menelan ludah.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Sebelum sempat menjawab, terdengar suara dari luar kamar.</p>
+
+                <p><span class="dialogue">"Kak?"</span></p>
+
+                <p>Seorang pemuda masuk sambil membawa ponsel.</p>
+
+                <p>Ia berhenti begitu melihat Ryou.</p>
+
+                <p><span class="dialogue">"Kamu sudah bangun?"</span></p>
+
+                <p>Ryou menatapnya.</p>
+
+                <p>Pemuda itu menatap balik.</p>
+
+                <p>Mereka saling diam.</p>
+
+                <p>Ryou perlahan menunjuknya.</p>
+
+                <p><span class="dialogue">"...Kamu siapa?"</span></p>
+
+                <p>Pemuda itu mengerutkan kening.</p>
+
+                <p><span class="dialogue">"Adikmu."</span></p>
+
+                <p>Ryou langsung terdiam.</p>
+
+                <p><span class="dialogue">"Adik...?"</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p>Ryou menoleh kepada perempuan di sampingnya.</p>
+
+                <p>Kemudian kembali melihat pemuda itu.</p>
+
+                <p><span class="dialogue">"Bentar."</span></p>
+
+                <p>Ia mengangkat kedua tangan.</p>
+
+                <p><span class="dialogue">"Aku tidak punya adik."</span></p>
+
+                <p>Ruangan mendadak sunyi.</p>
+
+                <p>Adik Haruto menatap ibunya.</p>
+
+                <p>Ibunya menatap Ryou.</p>
+
+                <p>Ryou mulai merasa tidak nyaman.</p>
+
+                <p><span class="dialogue">"Aku serius."</span></p>
+
+                <p>Ia mundur satu langkah.</p>
+
+                <p><span class="dialogue">"Aku tidak punya adik."</span></p>
+
+                <p><span class="dialogue">"Haruto..."</span></p>
+
+                <p><span class="dialogue">"Jangan panggil aku Haruto."</span></p>
+
+                <p>Nada suaranya mulai meninggi.</p>
+
+                <p>Ibunya terkejut.</p>
+
+                <p>Ryou menunjuk pintu.</p>
+
+                <p><span class="dialogue">"Kalian keluar dulu."</span></p>
+
+                <p><span class="dialogue">"Kamu kenapa?"</span></p>
+
+                <p><span class="dialogue">"Keluar."</span></p>
+
+                <p><span class="dialogue">"Haruto—"</span></p>
+
+                <p><span class="dialogue">"Aku bilang keluar!"</span></p>
+
+                <p>Mereka akhirnya diam.</p>
+
+                <p>Ibunya menggandeng adiknya keluar dari kamar.</p>
+
+                <p>Pintu tertutup.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Ryou berdiri sendirian.</p>
+
+                <p>Beberapa detik berlalu.</p>
+
+                <p>Ia masih menatap pintu.</p>
+
+                <p>Kemudian napasnya mulai tidak teratur.</p>
+
+                <p><span class="dialogue">"Tenang."</span></p>
+
+                <p>Ia memegang dadanya.</p>
+
+                <p><span class="dialogue">"Tenang."</span></p>
+
+                <p>Ryou duduk di tepi tempat tidur.</p>
+
+                <p><span class="dialogue">"Mungkin aku masih mimpi."</span></p>
+
+                <p>Ia menatap tangannya.</p>
+
+                <p><span class="dialogue">"Mungkin cuma mimpi."</span></p>
+
+                <p>Ia mencubit lengannya.</p>
+
+                <p><span class="dialogue">"Sakit."</span></p>
+
+                <p>Ryou terdiam.</p>
+
+                <p>Kemudian mencubit lebih keras.</p>
+
+                <p><span class="dialogue">"Aduh."</span></p>
+
+                <p>Ia mengusap lengannya.</p>
+
+                <p><span class="dialogue">"...Sial."</span></p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Ryou melihat sekeliling.</p>
+
+                <p>Tidak ada yang berubah.</p>
+
+                <p>Ia berdiri.</p>
+
+                <p>Mencari ponselnya.</p>
+
+                <p>Bukan ponselnya yang biasa.</p>
+
+                <p>Sebuah ponsel terletak di atas meja.</p>
+
+                <p>Ryou mengambilnya.</p>
+
+                <p>Layarnya langsung menyala.</p>
+
+                <p>Wallpaper seorang perempuan.</p>
+
+                <p class="standalone-line">Aoi.</p>
+
+                <p>Ryou tidak mengenalnya.</p>
+
+                <p>Ia membuka layar.</p>
+
+                <p>Puluhan notifikasi muncul.</p>
+
+                <p>Pesan dari grup.</p>
+
+                <p>Pesan dari teman.</p>
+
+                <p>Pesan dari keluarga.</p>
+
+                <p>Dan satu nama yang muncul beberapa kali.</p>
+
+                <p class="standalone-line">Aoi.</p>
+
+                <p>Ryou membuka salah satunya.</p>
+
+                <p class="quote-line">Sudah bangun?</p>
+
+                <p>Pesan berikutnya.</p>
+
+                <p class="quote-line">Jangan lupa hari ini.</p>
+
+                <p>Ryou menatap layar.</p>
+
+                <p><span class="dialogue">"Siapa Aoi?"</span></p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Ia meletakkan ponsel itu.</p>
+
+                <p>Kemudian mengambil dompet yang berada di meja.</p>
+
+                <p>Ia membukanya.</p>
+
+                <p>Ada kartu identitas.</p>
+
+                <p>Ryou melihatnya.</p>
+
+                <p>Nama yang tertulis di sana membuat tangannya berhenti bergerak.</p>
+
+                <p class="standalone-line">Kanzaki Haruto.</p>
+
+                <p>Ryou membeku.</p>
+
+                <p><span class="dialogue">"...Haruto."</span></p>
+
+                <p>Ia menatap kartu itu lebih lama.</p>
+
+                <p>Foto di sana bukan wajahnya.</p>
+
+                <p>Tetapi seseorang yang sangat ia kenal.</p>
+
+                <p>Wajah yang pernah ia lihat dalam potongan-potongan yang tidak seharusnya ada di kepalanya.</p>
+
+                <p>Seorang pemuda.</p>
+
+                <p>Tersenyum.</p>
+
+                <p>Ryou perlahan duduk kembali.</p>
+
+                <p><span class="dialogue">"Ini tidak mungkin."</span></p>
+
+                <p>Ia membuka dompet lebih lebar.</p>
+
+                <p>Ada kartu transportasi.</p>
+
+                <p>Beberapa foto kecil.</p>
+
+                <p>Salah satunya adalah Haruto bersama Aoi.</p>
+
+                <p>Ryou menutup dompet itu.</p>
+
+                <p>Cepat.</p>
+
+                <p>Seolah benda tersebut bisa menggigitnya.</p>
+
+                <p><span class="dialogue">"Tidak."</span></p>
+
+                <p>Ia berdiri.</p>
+
+                <p><span class="dialogue">"Ini cuma kebetulan."</span></p>
+
+                <div class="scene-break">—</div>
+
+                <p>Ryou membuka pintu kamar.</p>
+
+                <p>Ibunya dan adiknya masih berada di ruang tengah.</p>
+
+                <p>Begitu melihatnya, ibunya langsung berdiri.</p>
+
+                <p><span class="dialogue">"Kamu sudah lebih tenang?"</span></p>
+
+                <p>Ryou tidak menjawab.</p>
+
+                <p>Ia berjalan melewati mereka.</p>
+
+                <p><span class="dialogue">"Haruto?"</span></p>
+
+                <p>Ryou terus berjalan.</p>
+
+                <p>Pintu rumah dibuka.</p>
+
+                <p>Ia keluar.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Udara pagi terasa dingin.</p>
+
+                <p>Ryou berdiri di depan rumah.</p>
+
+                <p>Ia melihat jalan di depannya.</p>
+
+                <p>Semua terlihat normal.</p>
+
+                <p>Orang-orang berjalan.</p>
+
+                <p>Mobil lewat.</p>
+
+                <p>Anak-anak pergi sekolah.</p>
+
+                <p>Seorang pria membawa tas kerja.</p>
+
+                <p>Dunia tetap berjalan seperti biasa.</p>
+
+                <p>Hanya Ryou yang merasa semuanya salah.</p>
+
+                <p>Ia mulai berjalan.</p>
+
+                <p>Tidak tahu ke mana.</p>
+
+                <p>Ia hanya ingin pulang.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Beberapa menit kemudian, ia berhenti.</p>
+
+                <p>Ia mencoba mengingat alamat rumahnya.</p>
+
+                <p>Tidak ingat.</p>
+
+                <p>Nomor rumah?</p>
+
+                <p>Tidak tahu.</p>
+
+                <p>Nama jalan?</p>
+
+                <p>Tidak tahu.</p>
+
+                <p>Bahkan stasiun terdekat pun tidak yakin.</p>
+
+                <p>Ryou mengambil ponsel.</p>
+
+                <p>Ia mencoba mencari kontak ayahnya.</p>
+
+                <p>Tidak ada.</p>
+
+                <p>Ibunya.</p>
+
+                <p>Tidak ada.</p>
+
+                <p>Teman-temannya.</p>
+
+                <p>Tidak ada satu pun nama yang ia kenal.</p>
+
+                <p>Hanya orang-orang asing.</p>
+
+                <p>Ia membuka daftar kontak sampai ke bawah.</p>
+
+                <p>Kemudian berhenti.</p>
+
+                <p>Tidak ada.</p>
+
+                <p>Ryou tertawa kecil.</p>
+
+                <p>Bukan karena lucu.</p>
+
+                <p><span class="dialogue">"Bagus."</span></p>
+
+                <p>Ia memasukkan ponsel ke saku.</p>
+
+                <p><span class="dialogue">"Bahkan nomor Ayah saja tidak ada."</span></p>
+
+                <div class="scene-break">—</div>
+
+                <p>Ia berjalan lagi.</p>
+
+                <p>Sampai akhirnya berhenti di depan sebuah konbini.</p>
+
+                <p>Pintu otomatis terbuka.</p>
+
+                <p>Ryou masuk.</p>
+
+                <p>Ia berdiri di dekat rak minuman.</p>
+
+                <p>Pikirannya masih kacau.</p>
+
+                <p>Ia melihat pantulan samar tubuhnya di kaca pendingin.</p>
+
+                <p>Ryou langsung memalingkan wajah.</p>
+
+                <p>Belum.</p>
+
+                <p>Ia belum siap melihatnya.</p>
+
+                <p>Ia keluar lagi.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Beberapa jam berlalu.</p>
+
+                <p>Ryou masih berjalan tanpa tujuan.</p>
+
+                <p>Sampai akhirnya ia melihat seseorang dari kejauhan.</p>
+
+                <p>Seorang lelaki tua.</p>
+
+                <p>Cara berjalannya.</p>
+
+                <p>Rambutnya.</p>
+
+                <p>Bahkan jaket yang dikenakannya.</p>
+
+                <p>Semuanya terasa familiar.</p>
+
+                <p>Ryou terdiam.</p>
+
+                <p><span class="dialogue">"...Ayah?"</span></p>
+
+                <p>Ia mulai berjalan cepat.</p>
+
+                <p>Kemudian berlari.</p>
+
+                <p><span class="dialogue">"Ayah!"</span></p>
+
+                <p>Lelaki itu menoleh.</p>
+
+                <p>Bukan.</p>
+
+                <p>Bukan ayahnya.</p>
+
+                <p>Ryou berhenti.</p>
+
+                <p>Orang itu hanya menatapnya sebentar sebelum melanjutkan perjalanan.</p>
+
+                <p>Ryou berdiri di tengah trotoar.</p>
+
+                <p>Napasnya berat.</p>
+
+                <p>Ia menundukkan kepala.</p>
+
+                <p><span class="dialogue">"Bukan."</span></p>
+
+                <p>Tangannya mengepal.</p>
+
+                <p><span class="dialogue">"Bukan Ayah."</span></p>
+
+                <p>Untuk pertama kalinya sejak bangun pagi tadi, wajah Ryou benar-benar berubah.</p>
+
+                <p>Ia ingin pulang.</p>
+
+                <p>Ia ingin melihat rumahnya.</p>
+
+                <p>Ia ingin melihat ibunya.</p>
+
+                <p>Ia ingin melihat ayahnya.</p>
+
+                <p>Tetapi ia bahkan tidak tahu di mana rumahnya sendiri.</p>
+
+                <p>Ryou menatap orang-orang yang berlalu-lalang.</p>
+
+                <p>Tidak ada satu pun yang mengenalnya.</p>
+
+                <p>Tidak ada satu pun yang mencarinya.</p>
+
+                <p>Dunia berjalan seperti biasa.</p>
+
+                <p>Seolah Ryou tidak pernah ada.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Sore hari.</p>
+
+                <p>Ryou akhirnya kembali ke rumah yang tidak ia kenal.</p>
+
+                <p>Ia berdiri di depan pintu cukup lama.</p>
+
+                <p>Kemudian mengetuk.</p>
+
+                <p>Pintu terbuka.</p>
+
+                <p>Ibunya berdiri di sana.</p>
+
+                <p>Begitu melihat Ryou, wajahnya langsung berubah lega.</p>
+
+                <p><span class="dialogue">"Kamu dari mana?"</span></p>
+
+                <p>Ryou diam.</p>
+
+                <p><span class="dialogue">"Kami mencarimu."</span></p>
+
+                <p>Adiknya muncul dari belakang.</p>
+
+                <p><span class="dialogue">"Kak—"</span></p>
+
+                <p>Ia berhenti.</p>
+
+                <p>Ryou menatap mereka.</p>
+
+                <p>Kali ini tidak ada kemarahan.</p>
+
+                <p>Tidak ada teriakan.</p>
+
+                <p>Hanya kebingungan.</p>
+
+                <p>Ibunya perlahan mendekat.</p>
+
+                <p><span class="dialogue">"Kamu baik-baik saja?"</span></p>
+
+                <p>Ryou menunduk.</p>
+
+                <p>Kemudian bertanya,</p>
+
+                <p><span class="dialogue">"Nama Ibu siapa?"</span></p>
+
+                <p>Perempuan itu terdiam.</p>
+
+                <p><span class="dialogue">"...Apa?"</span></p>
+
+                <p><span class="dialogue">"Nama Ibu."</span></p>
+
+                <p>Ia menjawab dengan suara pelan.</p>
+
+                <p>Ryou mengangguk.</p>
+
+                <p>Kemudian menatap adiknya.</p>
+
+                <p><span class="dialogue">"Dan kamu?"</span></p>
+
+                <p>Adiknya menyebutkan namanya.</p>
+
+                <p>Ryou mengangguk lagi.</p>
+
+                <p>Ia menyimpan kedua nama itu di kepalanya.</p>
+
+                <p>Seolah sedang menghafal orang asing.</p>
+
+                <p>Kemudian ia bertanya,</p>
+
+                <p><span class="dialogue">"Dan... aku?"</span></p>
+
+                <p>Ibunya tidak menjawab.</p>
+
+                <p>Ryou menatapnya.</p>
+
+                <p><span class="dialogue">"Siapa aku?"</span></p>
+
+                <p>Perempuan itu mulai menangis.</p>
+
+                <p>Ryou menahan napas.</p>
+
+                <p><span class="dialogue">"Jangan menangis."</span></p>
+
+                <p>Ibunya mengusap air mata.</p>
+
+                <p><span class="dialogue">"Kamu Haruto."</span></p>
+
+                <p>Ryou menunduk.</p>
+
+                <p>Nama itu kembali terdengar.</p>
+
+                <p>Haruto.</p>
+
+                <p>Haruto.</p>
+
+                <p>Haruto.</p>
+
+                <p>Ia menatap lantai.</p>
+
+                <p>Kemudian perlahan berkata,</p>
+
+                <p><span class="dialogue">"Bukan."</span></p>
+
+                <p>Ibunya mendekat.</p>
+
+                <p><span class="dialogue">"Haruto..."</span></p>
+
+                <p><span class="dialogue">"Aku Ryou."</span></p>
+
+                <p>Suaranya pelan.</p>
+
+                <p><span class="dialogue">"Tapi..."</span></p>
+
+                <p>Ia mengangkat kepala.</p>
+
+                <p><span class="dialogue">"Kenapa tidak ada yang mengenal nama itu?"</span></p>
+
+                <p>Tidak ada jawaban.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Malam tiba.</p>
+
+                <p>Ryou masuk ke kamar.</p>
+
+                <p>Kali ini ia tidak menutup pintu dengan keras.</p>
+
+                <p>Ia duduk di tepi tempat tidur.</p>
+
+                <p>Ruangan itu masih terasa asing.</p>
+
+                <p>Namun sekarang ia mulai memperhatikan beberapa hal.</p>
+
+                <p>Foto di meja.</p>
+
+                <p>Pakaian di lemari.</p>
+
+                <p>Buku-buku.</p>
+
+                <p>Ponsel.</p>
+
+                <p>Barang-barang kecil yang semuanya menunjukkan satu hal.</p>
+
+                <p>Seseorang bernama Haruto benar-benar tinggal di sini.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Ryou berdiri.</p>
+
+                <p>Ia membuka pintu kamar mandi.</p>
+
+                <p>Menyalakan lampu.</p>
+
+                <p>Kemudian mencuci wajah.</p>
+
+                <p>Air menetes dari dagunya.</p>
+
+                <p>Ryou mengangkat kepala.</p>
+
+                <p>Dan melihat cermin.</p>
+
+                <p>Ia terdiam.</p>
+
+                <p>Seorang pemuda menatap balik kepadanya.</p>
+
+                <p>Bukan Ryou.</p>
+
+                <p>Ryou tidak bergerak.</p>
+
+                <p>Pantulan itu juga tidak bergerak.</p>
+
+                <p>Ia perlahan menyentuh wajahnya.</p>
+
+                <p>Pipi.</p>
+
+                <p>Hidung.</p>
+
+                <p>Rambut.</p>
+
+                <p>Semua terasa nyata.</p>
+
+                <p>Ryou menelan ludah.</p>
+
+                <p><span class="dialogue">"...Siapa?"</span></p>
+
+                <p>Tidak ada jawaban.</p>
+
+                <p>Ia mendekat ke cermin.</p>
+
+                <p>Wajah itu semakin jelas.</p>
+
+                <p>Wajah yang kemarin tertawa bersama Aoi.</p>
+
+                <p>Wajah yang pulang ke rumah.</p>
+
+                <p>Wajah yang berbicara dengan keluarganya.</p>
+
+                <p>Wajah yang mengatakan—</p>
+
+                <p class="standalone-line">Masih sempat.</p>
+
+                <p>Ryou mundur.</p>
+
+                <p>Napasnya kembali berat.</p>
+
+                <p>Tangannya menempel pada wastafel.</p>
+
+                <p><span class="dialogue">"Tidak mungkin."</span></p>
+
+                <p>Ia menutup mata.</p>
+
+                <p>Berharap ketika membukanya nanti semuanya kembali normal.</p>
+
+                <p>Satu detik.</p>
+
+                <p>Dua detik.</p>
+
+                <p>Tiga.</p>
+
+                <p>Ryou membuka mata.</p>
+
+                <p>Wajah itu masih ada.</p>
+
+                <p>Ia menundukkan kepala.</p>
+
+                <p>Untuk pertama kalinya, ia tidak punya alasan untuk menyangkalnya lagi.</p>
+
+                <p>Ia tidak sedang bermimpi.</p>
+
+                <p>Ia tidak sedang berada di rumah orang lain.</p>
+
+                <p>Ia tidak sedang dikerjai siapa pun.</p>
+
+                <p>Ryou menatap pantulan itu sekali lagi.</p>
+
+                <p><span class="dialogue">"...Aku jadi siapa?"</span></p>
+
+                <div class="scene-break">—</div>
+
+                <p>Di luar kamar, suara ibunya terdengar.</p>
+
+                <p><span class="dialogue">"Haruto?"</span></p>
+
+                <p>Ryou tidak menjawab.</p>
+
+                <p><span class="dialogue">"Haruto, makan malam."</span></p>
+
+                <p>Ia masih berdiri di depan cermin.</p>
+
+                <p>Nama itu kembali terdengar.</p>
+
+                <p>Haruto.</p>
+
+                <p>Ryou perlahan memejamkan mata.</p>
+
+                <p>Kemudian menjawab dengan suara yang hampir tidak terdengar.</p>
+
+                <p><span class="dialogue">"...Iya."</span></p>
+
+                <p>Ia mematikan lampu kamar mandi.</p>
+
+                <p>Dan malam itu, untuk pertama kalinya—</p>
+
+                <p>Ryou menjalani malam sebagai seseorang yang bukan dirinya.</p>
+
+            </article>
+
+            <!-- ===== AUTHOR'S NOTE ===== -->
+            <div class="author-note reveal">
+                <div class="author-note-inner">
+
+                    <div class="author-note-seal">💌</div>
+
+                    <div class="author-note-header">
+                        <div class="author-note-label">A Little Note From The Author</div>
+                        <div class="author-note-to">Renna,</div>
+                    </div>
+
+                    <div class="author-note-divider">✦ ✦ ✦</div>
+
+                    <div class="author-note-body">
+                        <p>kalau lu udah sampai di bagian ini...</p>
+
+                        <p>berarti lu beneran baca sampai akhir. 😭</p>
+
+                        <p>Terima kasih udah mau meluangkan waktu buat baca cerita yang masih jauh dari sempurna ini. Dari sekian banyak orang yang mungkin suatu hari nanti bakal menemukan <span class="highlight">The C Project</span>, lu adalah salah satu yang datang paling awal.</p>
+
+                        <p>Bahkan sebelum ceritanya benar-benar punya bentuk.</p>
+
+                        <p>Dan jujur, gue senang banget ada seseorang yang nungguin cerita ini ketika gue sendiri masih sibuk berantem sama revisi, ide, dan kalimat yang nggak mau bekerja sama.</p>
+
+                        <p>Jadi...</p>
+
+                        <span class="bold-line">terima kasih sudah menjadi pembaca pertama.</span>
+                        <span class="bold-line">Terima kasih sudah menjadi fans pertama.</span>
+                        <span class="bold-line">Dan terima kasih sudah menunggu.</span>
+
+                        <p style="margin-top: 24px;">Bab 5 selesai.</p>
+
+                        <p>Tapi perjalanan The C Project?</p>
+
+                        <p><span class="highlight">baru mulai.</span></p>
+
+                        <p style="margin-top: 20px;">Sampai ketemu di cerita berikutnya,</p>
+
+                        <p><span class="em">limited edition fan.</span> 👿</p>
+
+                        <div class="author-note-signature">
+                            <div class="author-note-signature-text">
+                                <span class="from">—</span>
+                                <span class="name">Cahya</span>
+                            </div>
+                            <div class="author-note-signature-avatar">C</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ===== END OF VOLUME ===== -->
+            <div class="end-volume reveal">
+                <div class="end-volume-icon">🌅</div>
+                <div class="end-volume-title">Akhir Volume 1</div>
+                <p class="end-volume-text">
+                    Perjalanan Ryou sebagai Haruto baru saja dimulai.<br>
+                    Dan babak berikutnya... <span class="em">masih menunggu untuk ditulis.</span>
+                </p>
+                <a href="The Time I Never Knew.html" class="btn-lanjut">
+                    <i class="fas fa-book"></i> Kembali ke Daftar Bab
+                </a>
+            </div>
+
+            <!-- ===== CHAPTER NAVIGATION ===== -->
+            <nav class="chapter-nav reveal">
+                <div class="chapter-nav-label">Navigasi Bab</div>
+                <div class="chapter-nav-buttons">
+
+                    <!-- Prev: Bab 4 -->
+                    <a href="bab 4.html" class="nav-chapter-btn">
+                        <span class="nav-btn-icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="nav-btn-text">
+                            <span class="nav-btn-label">Bab Sebelumnya</span>
+                            <span class="nav-btn-title">Bab 4 — Haruto</span>
+                        </span>
+                    </a>
+
+                    <!-- Next: Kembali ke Daftar Bab -->
+                    <a href="The Time I Never Knew.html" class="nav-chapter-btn next">
+                        <span class="nav-btn-text" style="text-align: right;">
+                            <span class="nav-btn-label">Kembali ke</span>
+                            <span class="nav-btn-title">Daftar Bab</span>
+                        </span>
+                        <span class="nav-btn-icon">
+                            <i class="fas fa-list"></i>
+                        </span>
+                    </a>
+
+                </div>
+            </nav>
+
+        </main>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-text">
+                &copy; 2025 <span class="brand">The C Project</span> · by Cahya. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== BOTTOM NAV (MOBILE) ===== -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-grid">
+            <a href="index.html" class="bottom-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="The Time I Never Knew.html" class="bottom-nav-item">
+                <i class="fas fa-book"></i>
+                <span>Novel</span>
+            </a>
+            <a href="#" class="bottom-nav-item active">
+                <i class="fas fa-book-open"></i>
+                <span>Bab 5</span>
+            </a>
+            <a href="The Time I Never Knew.html" class="bottom-nav-item">
+                <i class="fas fa-list"></i>
+                <span>Daftar</span>
+            </a>
+            <button class="bottom-nav-item" id="mobileMenuToggle">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Lainnya</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== SIDEBAR DRAWER ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <div class="sidebar-brand-icon">C</div>
+                <span class="sidebar-brand-text">The C Project</span>
+            </a>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Menu Utama</div>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="beranda1.html" class="nav-link active">
+                    <i class="fas fa-book"></i> The Time I Never Knew
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Volume 1</div>
+                <a href="bab1.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 1 — Kemenangan
+                </a>
+                <a href="bab 2.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 2 — Yang Berjalan Lebih Dulu
+                </a>
+                <a href="bab 3.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 3 — Besok
+                </a>
+                <a href="bab 4.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 4 — Haruto
+                </a>
+                <a href="bab 5.html" class="nav-link sub active">
+                    <i class="fas fa-bookmark"></i> Bab 5 — Kehidupan yang Bukan Milikku
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Lainnya</div>
+                <a href="index.html#community" class="nav-link">
+                    <i class="fas fa-users"></i> Komunitas
+                </a>
+                <button class="nav-link" id="sidebarThemeToggle">
+                    <i class="fas fa-moon"></i> Mode Gelap
+                </button>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // ============================================================
+        //  THEME
+        // ============================================================
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+            document.querySelectorAll('#themeToggle i, #sidebarThemeToggle i').forEach(i => {
+                i.className = `fas ${icon}`;
+            });
+
+            const sidebarToggle = document.getElementById('sidebarThemeToggle');
+            if (sidebarToggle) {
+                const textNode = Array.from(sidebarToggle.childNodes)
+                    .find(n => n.nodeType === 3 && n.textContent.trim());
+                if (textNode) {
+                    textNode.textContent = theme === 'dark' ? ' Mode Gelap' : ' Mode Terang';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const next = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            showToast(next === 'dark' ? '🌙 Mode Gelap' : '☀️ Mode Terang');
+        }
+
+        // ============================================================
+        //  TOAST
+        // ============================================================
+        function showToast(msg) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.textContent = msg;
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.classList.add('out');
+                setTimeout(() => el.remove(), 400);
+            }, 2500);
+        }
+
+        // ============================================================
+        //  SIDEBAR
+        // ============================================================
+        function initSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            function openSidebar() {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+                document.body.classList.add('no-scroll');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            }
+
+            document.getElementById('menuToggle')?.addEventListener('click', openSidebar);
+            document.getElementById('mobileMenuToggle')?.addEventListener('click', openSidebar);
+            document.getElementById('sidebarClose')?.addEventListener('click', closeSidebar);
+            overlay?.addEventListener('click', closeSidebar);
+
+            sidebar.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (link.tagName === 'A') {
+                        setTimeout(closeSidebar, 200);
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        //  READING PROGRESS
+        // ============================================================
+        function initReadingProgress() {
+            const progressBar = document.getElementById('readingProgress');
+            if (!progressBar) return;
+
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                        progressBar.style.width = Math.min(progress, 100) + '%';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
+
+        // ============================================================
+        //  SCROLL REVEAL
+        // ============================================================
+        function initReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // ============================================================
+        //  ESC KEY
+        // ============================================================
+        function initEscKey() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    document.getElementById('sidebarOverlay')?.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+        }
+
+        // ============================================================
+        //  KEYBOARD NAVIGATION (← →)
+        // ============================================================
+        function initKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.key === 'ArrowRight') {
+                    // Bab 5 = bab terakhir → kembali ke daftar bab
+                    window.location.href = 'The Time I Never Knew.html';
+                } else if (e.key === 'ArrowLeft') {
+                    window.location.href = 'bab 4.html';
+                }
+            });
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        function init() {
+            console.log('📖 Bab 5 — Kehidupan yang Bukan Milikku — loaded');
+
+            applyTheme(currentTheme);
+
+            document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+            document.getElementById('sidebarThemeToggle')?.addEventListener('click', toggleTheme);
+
+            initSidebar();
+            initReadingProgress();
+            initReveal();
+            initEscKey();
+            initKeyboardNav();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
