@@ -5,21 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The C Project — Webnovel Indonesia</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/thecproject.png" />
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     
     <style>
-        /* ============================================================
-               ROOT VARIABLES & RESET
-            ============================================================ */
         :root {
             --primary: #7C5CFC;
             --primary-dark: #5B3FD4;
@@ -63,9 +57,6 @@
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
 
-        /* ============================================================
-               APP WRAPPER
-            ============================================================ */
         .app {
             min-height: 100vh;
             position: relative;
@@ -85,17 +76,11 @@
             }
         }
 
-        /* ============================================================
-               AMBIENT GLOW ORBS
-            ============================================================ */
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
         .orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; background: var(--primary); opacity: 0.08; }
         .orb-2 { width: 300px; height: 300px; bottom: 100px; left: -50px; background: var(--secondary); opacity: 0.06; }
         .orb-3 { width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent); opacity: 0.04; }
 
-        /* ============================================================
-               HEADER
-            ============================================================ */
         .header {
             position: sticky;
             top: 0;
@@ -169,9 +154,6 @@
             transform: scale(1.05);
         }
 
-        /* ============================================================
-               HERO
-            ============================================================ */
         .hero { padding: 40px 16px 30px; text-align: center; position: relative; }
         @media (min-width: 768px) { .hero { padding: 60px 24px 40px; } }
 
@@ -221,7 +203,6 @@
         .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         @media (min-width: 768px) { .hero-actions { gap: 12px; } }
 
-        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -259,9 +240,6 @@
         @media (min-width: 768px) { .btn-sm { padding: 8px 18px; font-size: 13px; gap: 8px; } }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 
-        /* ============================================================
-               SECTIONS
-            ============================================================ */
         .section { padding: 24px 16px 40px; }
         @media (min-width: 768px) { .section { padding: 40px 24px 60px; } }
 
@@ -280,7 +258,6 @@
         .section-header p { color: var(--text-secondary); font-size: 0.9rem; }
         @media (min-width: 768px) { .section-header p { font-size: 1rem; } }
 
-        /* Novels Grid */
         .novels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (min-width: 480px) { .novels-grid { gap: 14px; } }
         @media (min-width: 768px) { .novels-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
@@ -396,7 +373,6 @@
         .novel-card-actions .btn { flex: 1; justify-content: center; padding: 6px 8px; font-size: 10px; }
         @media (min-width: 768px) { .novel-card-actions .btn { padding: 10px 12px; font-size: 13px; } }
 
-        /* Community */
         .community-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         @media (min-width: 480px) { .community-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 768px) { .community-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
@@ -431,7 +407,6 @@
         .community-card .btn { width: 100%; justify-content: center; font-size: 11px; padding: 8px 12px; }
         @media (min-width: 768px) { .community-card .btn { font-size: 13px; padding: 10px 12px; } }
 
-        /* Footer */
         .footer { padding: 30px 16px 20px; border-top: 1px solid var(--border-light); margin-top: 20px; }
         @media (min-width: 768px) { .footer { padding: 40px 24px 24px; } }
 
@@ -473,9 +448,6 @@
             .footer-bottom { padding-top: 20px; margin-top: 20px; font-size: 12px; }
         }
 
-        /* ============================================================
-               INFO POPUP (NOVEL DETAIL)
-            ============================================================ */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -563,9 +535,6 @@
         .popup-actions .btn { flex: 1; justify-content: center; font-size: 12px; padding: 8px 12px; }
         @media (min-width: 768px) { .popup-actions .btn { font-size: 14px; padding: 10px 16px; } }
 
-        /* ============================================================
-               TOAST
-            ============================================================ */
         .toast {
             position: fixed;
             bottom: 80px;
@@ -600,9 +569,6 @@
             to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
         }
 
-        /* ============================================================
-               MOBILE BOTTOM NAV
-            ============================================================ */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -661,9 +627,6 @@
             body { padding-bottom: 0; }
         }
 
-        /* ============================================================
-               DARK / LIGHT MODE
-            ============================================================ */
         [data-theme="light"] {
             --bg-dark: #F0F0F5;
             --bg-card: rgba(255, 255, 255, 0.6);
@@ -688,9 +651,6 @@
         [data-theme="light"] .novel-card { background: rgba(255, 255, 255, 0.7); }
         [data-theme="light"] .novel-card:hover { background: rgba(255, 255, 255, 0.9); }
 
-        /* ============================================================
-               SCROLL ANIMATIONS
-            ============================================================ */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -1051,18 +1011,373 @@
         }
 
         .letter-close-btn i { font-size: 14px; }
+
+        /* ============================================================
+               RENNA POPUP — SPECIAL READER MESSAGE
+            ============================================================ */
+        .renna-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 2, 15, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: letterOverlayIn 0.6s ease;
+            overflow: hidden;
+        }
+
+        .renna-overlay.active { display: flex; }
+
+        .renna-sparkles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .renna-sparkle {
+            position: absolute;
+            font-size: 14px;
+            opacity: 0;
+            animation: sparkleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0%   { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+            20%  { opacity: 1; transform: translateY(-20px) scale(1) rotate(45deg); }
+            80%  { opacity: 1; transform: translateY(-80px) scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: translateY(-120px) scale(0.5) rotate(270deg); }
+        }
+
+        .renna-box {
+            background: linear-gradient(160deg,
+                rgba(30, 10, 40, 0.99) 0%,
+                rgba(50, 15, 60, 0.99) 50%,
+                rgba(25, 8, 35, 0.99) 100%);
+            border: 1px solid rgba(255, 107, 138, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 32px 22px 24px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.7),
+                0 0 120px rgba(255, 107, 138, 0.25),
+                0 0 60px rgba(124, 92, 252, 0.2),
+                inset 0 0 80px rgba(255, 107, 138, 0.04);
+            animation: rennaBoxIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .renna-box { padding: 44px 40px 32px; border-radius: var(--radius-xl); }
+        }
+
+        @keyframes rennaBoxIn {
+            0%   { opacity: 0; transform: translateY(60px) scale(0.85) rotate(-2deg); }
+            60%  { transform: translateY(-8px) scale(1.02) rotate(1deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        .renna-box::before,
+        .renna-box::after {
+            content: "";
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border: 2px solid rgba(255, 107, 138, 0.5);
+            pointer-events: none;
+        }
+
+        .renna-box::before {
+            top: 12px; left: 12px;
+            border-right: none; border-bottom: none;
+            border-top-left-radius: 8px;
+        }
+
+        .renna-box::after {
+            bottom: 12px; right: 12px;
+            border-left: none; border-top: none;
+            border-bottom-right-radius: 8px;
+        }
+
+        .renna-box::-webkit-scrollbar { width: 4px; }
+        .renna-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 138, 0.4);
+            border-radius: 10px;
+        }
+
+        .renna-trophy {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B8A, #FFD166, #FF6B8A);
+            background-size: 200% 200%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #1A1A2E;
+            box-shadow:
+                0 8px 40px rgba(255, 107, 138, 0.5),
+                inset 0 -4px 12px rgba(0, 0, 0, 0.2);
+            animation: trophyFloat 3s ease-in-out infinite, trophyGlow 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes trophyFloat {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50%      { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        @keyframes trophyGlow {
+            0%, 100% { box-shadow: 0 8px 40px rgba(255, 107, 138, 0.5), inset 0 -4px 12px rgba(0,0,0,0.2); }
+            50%      { box-shadow: 0 12px 60px rgba(255, 209, 102, 0.7), inset 0 -4px 12px rgba(0,0,0,0.2); }
+        }
+
+        .renna-header { text-align: center; margin-bottom: 18px; }
+
+        .renna-to {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .renna-name {
+            font-family: var(--font-hand);
+            font-size: clamp(2.6rem, 7vw, 3.8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B8A 0%, #FFD166 50%, #FF6B8A 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 24px rgba(255, 107, 138, 0.5));
+            animation: nameShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes nameShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        .renna-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 18px;
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(255, 107, 138, 0.15));
+            border: 1px solid rgba(255, 209, 102, 0.4);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 800;
+            color: #FFD166;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(255, 209, 102, 0.2);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(255, 209, 102, 0.2); }
+            50%      { box-shadow: 0 4px 30px rgba(255, 209, 102, 0.5); }
+        }
+
+        .renna-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            color: rgba(255, 107, 138, 0.6);
+            font-size: 10px;
+            letter-spacing: 6px;
+        }
+
+        .renna-divider::before,
+        .renna-divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 138, 0.5), transparent);
+        }
+
+        .renna-body {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            line-height: 1.85;
+            font-weight: 400;
+            padding: 0 4px;
+        }
+
+        @media (min-width: 768px) {
+            .renna-body { font-size: 15.5px; line-height: 1.9; }
+        }
+
+        .renna-body p {
+            margin-bottom: 14px;
+            opacity: 0;
+            transform: translateY(8px);
+            animation: rennaTextIn 0.7s ease forwards;
+        }
+
+        .renna-body p:nth-child(1)  { animation-delay: 0.5s; }
+        .renna-body p:nth-child(2)  { animation-delay: 0.8s; }
+        .renna-body p:nth-child(3)  { animation-delay: 1.1s; }
+        .renna-body p:nth-child(4)  { animation-delay: 1.4s; }
+        .renna-body p:nth-child(5)  { animation-delay: 1.7s; }
+        .renna-body p:nth-child(6)  { animation-delay: 2.0s; }
+        .renna-body p:nth-child(7)  { animation-delay: 2.3s; }
+        .renna-body p:nth-child(8)  { animation-delay: 2.6s; }
+        .renna-body p:nth-child(9)  { animation-delay: 2.9s; }
+        .renna-body p:nth-child(10) { animation-delay: 3.2s; }
+        .renna-body p:nth-child(11) { animation-delay: 3.5s; }
+        .renna-body p:nth-child(12) { animation-delay: 3.8s; }
+        .renna-body p:nth-child(13) { animation-delay: 4.1s; }
+
+        @keyframes rennaTextIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .renna-body .hl { color: #FFD166; font-weight: 700; }
+        .renna-body .em { color: #FF6B8A; font-style: italic; font-weight: 600; }
+        .renna-body .chaos {
+            font-family: var(--font-hand);
+            font-weight: 700;
+            color: #FF6B8A;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (min-width: 768px) {
+            .renna-body .chaos { font-size: 26px; }
+        }
+
+        .renna-body .quote {
+            display: block;
+            margin: 12px 0 12px 16px;
+            padding-left: 14px;
+            border-left: 3px solid #FFD166;
+            color: #FFD166;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .renna-signature {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px dashed rgba(255, 107, 138, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            animation: rennaTextIn 0.8s ease 4.4s forwards;
+        }
+
+        .renna-signature-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B8A, #FFD166);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: #1A1A2E;
+            border: 2px solid rgba(255, 209, 102, 0.6);
+            box-shadow: 0 6px 24px rgba(255, 107, 138, 0.5);
+            flex-shrink: 0;
+            animation: trophyGlow 2.5s ease-in-out infinite;
+        }
+
+        .renna-signature-text { display: flex; flex-direction: column; }
+
+        .renna-signature-text .from {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .renna-signature-text .name {
+            font-family: var(--font-hand);
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFD166;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+
+        .renna-footer {
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .renna-footer-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .renna-close-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 32px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #FF6B8A, #FFD166);
+            color: #1A1A2E;
+            font-weight: 800;
+            font-size: 13px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 28px rgba(255, 107, 138, 0.5);
+            min-width: 240px;
+            letter-spacing: 0.3px;
+            animation: btnRennaPulse 2s ease-in-out infinite;
+        }
+
+        .renna-close-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 10px 40px rgba(255, 107, 138, 0.7);
+        }
+
+        @keyframes btnRennaPulse {
+            0%, 100% { box-shadow: 0 6px 28px rgba(255, 107, 138, 0.5); }
+            50%      { box-shadow: 0 6px 40px rgba(255, 209, 102, 0.8); }
+        }
+
+        .renna-close-btn i { font-size: 14px; }
     </style>
 </head>
 <body>
-    <!-- ===== AMBIENT ORBS ===== -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- ===== APP ===== -->
     <div class="app">
 
-        <!-- ===== HEADER ===== -->
         <header class="header">
             <a href="#" class="header-brand">
                 <div class="header-brand-icon">C</div>
@@ -1075,7 +1390,6 @@
             </div>
         </header>
 
-        <!-- ===== HERO ===== -->
         <section class="hero" id="home">
             <div class="hero-badge">✨ Original Webnovel</div>
             <h1>
@@ -1096,7 +1410,6 @@
             </div>
         </section>
 
-        <!-- ===== NOVELS ===== -->
         <section class="section" id="novels">
             <div class="section-header">
                 <h2>Webnovel Unggulan</h2>
@@ -1104,10 +1417,9 @@
             </div>
 
             <div class="novels-grid">
-                <!-- Novel 1: The Time I Never Knew (ONGOING) -->
                 <div class="novel-card reveal reveal-delay-1" data-novel="the-time-i-never-knew">
                     <div class="novel-card-cover">
-                        <img src="img/thetimeineverknew.png" alt="The Time I Never Knew" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/7C5CFC/ffffff?text=The+Time+I+Never+Knew'">
+                        <img src="img/thetimeineverknew.png" alt="The Time I Never Knew" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #7C5CFC, #5B3FD4)';">
                         <span class="novel-card-badge">Berlangsung</span>
                     </div>
                     <div class="novel-card-body">
@@ -1120,9 +1432,9 @@
                         </div>
                         <p class="novel-card-desc">Kisah emosional tentang menemukan kembali makna hidup di momen-momen yang tak terduga.</p>
                         <div class="novel-card-actions">
-                            <button class="btn btn-primary btn-sm read-btn" data-novel="the-time-i-never-knew">
+                            <a href="beranda1.html" class="btn btn-primary btn-sm">
                                 <i class="fas fa-play"></i> Baca
-                            </button>
+                            </a>
                             <button class="btn btn-secondary btn-sm info-btn" data-novel="the-time-i-never-knew">
                                 <i class="fas fa-info-circle"></i>
                             </button>
@@ -1130,10 +1442,9 @@
                     </div>
                 </div>
 
-                <!-- Novel 2: Behind The Portal (COMING SOON) -->
                 <div class="novel-card reveal reveal-delay-2" data-novel="behind-the-portal">
                     <div class="novel-card-cover">
-                        <img src="img/behindtheportal.png" alt="Behind The Portal" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/FF6B8A/ffffff?text=Behind+The+Portal'">
+                        <img src="img/behindtheportal.png" alt="Behind The Portal" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #FF6B8A, #e55a76)';">
                         <span class="novel-card-badge soon">Segera</span>
                     </div>
                     <div class="novel-card-body">
@@ -1156,10 +1467,9 @@
                     </div>
                 </div>
 
-                <!-- Novel 3: Unwanted Life (COMING SOON) -->
                 <div class="novel-card reveal reveal-delay-3" data-novel="unwanted-life">
                     <div class="novel-card-cover">
-                        <img src="img/unwantedlife.png" alt="Unwanted Life" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/3DDC97/ffffff?text=Unwanted+Life'">
+                        <img src="img/unwantedlife.png" alt="Unwanted Life" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #3DDC97, #2ab877)';">
                         <span class="novel-card-badge soon">Segera</span>
                     </div>
                     <div class="novel-card-body">
@@ -1182,10 +1492,9 @@
                     </div>
                 </div>
 
-                <!-- Novel 4: Unjudged (COMING SOON) -->
                 <div class="novel-card reveal reveal-delay-4" data-novel="unjudged">
                     <div class="novel-card-cover">
-                        <img src="img/unjudged.png" alt="Unjudged" loading="lazy" onerror="this.src='https://via.placeholder.com/300x420/8A8A9D/ffffff?text=Unjudged'">
+                        <img src="img/unjudged.png" alt="Unjudged" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #8A8A9D, #6B6B8D)';">
                         <span class="novel-card-badge soon">Segera</span>
                     </div>
                     <div class="novel-card-body">
@@ -1210,7 +1519,6 @@
             </div>
         </section>
 
-        <!-- ===== COMMUNITY ===== -->
         <section class="section" id="community">
             <div class="section-header">
                 <h2>Gabung Komunitas</h2>
@@ -1239,7 +1547,6 @@
             </div>
         </section>
 
-        <!-- ===== FOOTER ===== -->
         <footer class="footer">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -1271,7 +1578,6 @@
         </footer>
     </div>
 
-    <!-- ===== BOTTOM NAV (MOBILE) ===== -->
     <nav class="bottom-nav">
         <div class="bottom-nav-inner">
             <a href="#home" class="bottom-nav-item active">
@@ -1293,7 +1599,6 @@
         </div>
     </nav>
 
-    <!-- ===== NOVEL INFO POPUP ===== -->
     <div class="popup-overlay" id="infoPopup">
         <div class="popup">
             <div class="popup-header">
@@ -1314,43 +1619,56 @@
         </div>
     </div>
 
-    <!-- ============================================================
-         LETTER POPUP — WELCOME MESSAGE
-    ============================================================ -->
+    <!-- LETTER POPUP -->
     <div class="letter-overlay" id="letterOverlay">
         <div class="letter-box" id="letterBox">
             <div class="letter-seal">💌</div>
-
             <div class="letter-header">
-                <div class="letter-to">Untuk</div>
-                <div class="letter-name">Pembaca Pertama</div>
+                <div class="letter-to">SPECIAL FOR</div>
+                <div class="letter-name">U !</div>
             </div>
-
             <div class="letter-divider">✦ ✦ ✦</div>
+           <div class="letter-body">
+    <p><em class="em">YOOOO, TERIMAKASIH TELAH MENUNGGU!!!</em></p>
 
-            <div class="letter-body">
-                <p><em class="em">Untuk kamu, pembaca pertama The C Project.</em></p>
+    <p>RENNA.</p>
 
-                <p>Kalau kamu membaca tulisan ini, berarti akhirnya cerita yang selama ini cuma ada di kepala dan folder penulisnya berhasil sampai juga ke tanganmu.</p>
+    <p><span class="highlight">AKHIRNYA LU SAMPE JUGA DI SINI. 👿</span></p>
 
-                <p>Jujur, agak lucu juga.</p>
+    <p>Gue nggak tahu kenapa lu bisa sesabar itu nungguin novel yang bahkan babnya aja baru segini, tapi ya... terima kasih udah mau nunggu.</p>
 
-                <p>Dari sekian banyak orang yang mungkin suatu hari menemukan cerita ini, kamu justru jadi orang pertama yang benar-benar menunggu.</p>
+    <p>Lu bukan cuma pembaca pertama <span class="highlight">THE C PROJECT.</span></p>
 
-                <p>Jadi, <span class="highlight">selamat datang</span>.</p>
+    <p>Lu juga <span class="bold-line">fans pertama.</span></p>
 
-                <p>Nikmati ceritanya, nikmati setiap hal kecil yang ada di dalamnya, dan kalau nanti kamu menemukan bagian yang kamu suka, jangan lupa bilang ke penulisnya.</p>
+    <p>Dan entah kenapa, menurut gue itu keren buat ditulis di sini.</p>
 
-                <p>Karena mungkin, ada seseorang di balik layar yang diam-diam senang setiap kali kamu bilang,</p>
+    <p>Karena mungkin suatu hari nanti <span class="highlight">The C Project</span> bakal punya banyak cerita, banyak pembaca, dan mungkin tempat ini bakal jauh lebih ramai dari sekarang.</p>
 
-                <p><span class="bold-line">"Aku suka."</span></p>
+    <p>Tapi sebelum semua itu terjadi—</p>
 
-                <p>Selamat membaca.</p>
+    <p><span class="bold-line">lu udah ada di sini duluan.</span></p>
 
-                <p>Dan jangan pergi terlalu jauh.</p>
+    <p>Di saat semuanya masih kecil.</p>
 
-                <p><span class="highlight">The C Project baru saja dimulai.</span></p>
-            </div>
+    <p>Di saat ceritanya masih berantakan.</p>
+
+    <p>Di saat gue masih sibuk revisi sambil ngomel sendiri karena satu paragraf nggak sesuai kepala gue.</p>
+
+    <p>Jadi kalau nanti suatu hari lu melihat kembali halaman ini...</p>
+
+    <p>ingat satu hal:</p>
+
+    <p><span class="bold-line">lu pernah menjadi orang pertama yang menunggu sebuah cerita yang bahkan belum selesai diceritakan.</span></p>
+
+    <p>Dan untuk itu,</p>
+
+    <p>selamat datang di <span class="highlight">The C Project, Renna.</span></p>
+
+    <p><em class="em">Enjoy the story, limited edition fan. 👿</em></p>
+
+    <p>— Cahya mirip Jefri Nichol</p>
+</div>
 
             <div class="letter-signature">
                 <div class="letter-signature-avatar">C</div>
@@ -1359,17 +1677,14 @@
                     <span class="name">Cahya</span>
                 </div>
             </div>
-
             <div class="letter-footer">
                 <div class="letter-countdown-text" id="letterCountdownText">
                     <i class="fas fa-hourglass-half" style="color: #FFD166; margin-right: 4px;"></i>
                     Pesan bisa ditutup dalam <span class="timer" id="letterTimer">6</span> detik...
                 </div>
-
                 <div class="letter-progress-bar">
                     <div class="letter-progress-fill" id="letterProgressFill"></div>
                 </div>
-
                 <button class="letter-close-btn" id="letterCloseBtn" disabled>
                     <i class="fas fa-lock"></i>
                     <span id="letterCloseBtnText">Tunggu sebentar...</span>
@@ -1378,13 +1693,60 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
+    <!-- RENNA POPUP -->
+    <div class="renna-overlay" id="rennaOverlay">
+        <div class="renna-sparkles" id="rennaSparkles"></div>
+
+        <div class="renna-box" id="rennaBox">
+            <div class="renna-trophy">🏆</div>
+
+            <div class="renna-header">
+                <div class="renna-to">Pesan Spesial Untuk</div>
+                <div class="renna-name">Renna</div>
+                <div class="renna-badge">⭐ Pembaca Pertama The C Project ⭐</div>
+            </div>
+
+            <div class="renna-divider">✦ ✦ ✦</div>
+
+            <div class="renna-body">
+                <p><em class="em">YOOOOOOOOOOOOO.</em></p>
+                <p><span class="chaos">RENNA.</span></p>
+                <p>Lu beneran sampe sini.</p>
+                <p>Gue kira tadi lu cuma bacot bilang mau baca. Ternyata <span class="hl">SERIUS</span> 😭</p>
+                <p>Oke, karena lu adalah manusia pertama yang dengan sukarela menungguin novel gue, maka gue kasih penghargaan tertinggi:</p>
+                <p><span class="hl">PEMBACA PERTAMA THE C PROJECT.</span></p>
+                <p>Tidak ada hadiah.<br>Tidak ada uang.<br>Tidak ada sertifikat.</p>
+                <p>Cuma hak istimewa buat bilang:</p>
+                <p><span class="quote">"Gue baca dari awal."</span></p>
+                <p><span class="chaos">WKWKWK.</span></p>
+                <p>Tapi serius, makasih udah nungguin.</p>
+                <p>Sebagai penulis, gue seneng banget akhirnya bisa nunjukin cerita ini ke seseorang yang emang penasaran sama apa yang gue buat.</p>
+                <p>So... <span class="hl">selamat membaca, Renna.</span></p>
+                <p>Jaga ekspektasi lu baik-baik. 👿</p>
+            </div>
+
+            <div class="renna-signature">
+                <div class="renna-signature-avatar">C</div>
+                <div class="renna-signature-text">
+                    <span class="from">Dengan bangga,</span>
+                    <span class="name">Cahya</span>
+                </div>
+            </div>
+
+            <div class="renna-footer">
+                <div class="renna-footer-text">
+                    <i class="fas fa-heart" style="color: #FF6B8A;"></i>
+                    Kamu pembaca pertama. Jangan ke mana-mana. 💛
+                </div>
+                <button class="renna-close-btn" id="rennaCloseBtn">
+                    <i class="fas fa-book-open"></i>
+                    Mulai Baca Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ============================================================
-        //  DATA NOVELS
-        // ============================================================
         const NOVELS = {
             'the-time-i-never-knew': {
                 title: 'The Time I Never Knew',
@@ -1427,17 +1789,11 @@
             }
         };
 
-        // ============================================================
-        //  STATE
-        // ============================================================
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let currentNovel = null;
         let letterInterval = null;
         let letterCanClose = false;
 
-        // ============================================================
-        //  THEME
-        // ============================================================
         function applyTheme(theme) {
             currentTheme = theme;
             document.documentElement.setAttribute('data-theme', theme);
@@ -1456,9 +1812,6 @@
             showToast(next === 'dark' ? '🌙 Mode Gelap' : '☀️ Mode Terang');
         }
 
-        // ============================================================
-        //  TOAST
-        // ============================================================
         function showToast(msg) {
             const existing = document.querySelector('.toast');
             if (existing) existing.remove();
@@ -1474,9 +1827,6 @@
             }, 2500);
         }
 
-        // ============================================================
-        //  INFO POPUP
-        // ============================================================
         function openPopup(id) {
             const el = document.getElementById(id);
             if (el) {
@@ -1519,9 +1869,6 @@
             openPopup('infoPopup');
         }
 
-        // ============================================================
-        //  READ HANDLER
-        // ============================================================
         function handleRead(novelId) {
             const data = NOVELS[novelId];
             if (!data || !data.available) {
@@ -1534,9 +1881,6 @@
             }
         }
 
-        // ============================================================
-        //  SCROLL ANIMATIONS
-        // ============================================================
         function initReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1547,9 +1891,6 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // ============================================================
-        //  BOTTOM NAV
-        // ============================================================
         function initBottomNav() {
             const items = document.querySelectorAll('.bottom-nav-item');
             const sections = ['home', 'novels', 'community'];
@@ -1589,11 +1930,9 @@
         }
 
         // ============================================================
-        //  LETTER POPUP — WELCOME MESSAGE
+        // LETTER POPUP
         // ============================================================
-        const LETTER_CONFIG = {
-            COUNTDOWN_SECONDS: 6
-        };
+        const LETTER_CONFIG = { COUNTDOWN_SECONDS: 6 };
 
         function showLetter() {
             const overlay = document.getElementById('letterOverlay');
@@ -1675,108 +2014,141 @@
             setTimeout(() => {
                 showToast('💛 Selamat membaca! ✨');
             }, 300);
+
+            // Munculkan popup Renna setelah surat welcome ditutup
+            setTimeout(() => {
+                showRennaPopup();
+            }, 1200);
         }
 
         // ============================================================
-        //  INIT
+        // RENNA POPUP
+        // ============================================================
+        function showRennaPopup() {
+            const overlay = document.getElementById('rennaOverlay');
+            if (!overlay) return;
+
+            document.body.style.overflow = 'hidden';
+            overlay.classList.add('active');
+
+            spawnRennaSparkles();
+        }
+
+        function closeRennaPopup() {
+            const overlay = document.getElementById('rennaOverlay');
+            if (!overlay) return;
+
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+
+            setTimeout(() => {
+                showToast('💛 Selamat membaca, Renna! 👿');
+            }, 300);
+        }
+
+        function spawnRennaSparkles() {
+            const container = document.getElementById('rennaSparkles');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const symbols = ['✨', '💛', '⭐', '💖', '🌟', '💫'];
+            const count = 18;
+
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('span');
+                s.className = 'renna-sparkle';
+                s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = (60 + Math.random() * 40) + '%';
+                s.style.animationDelay = (Math.random() * 4) + 's';
+                s.style.animationDuration = (3 + Math.random() * 3) + 's';
+                s.style.fontSize = (10 + Math.random() * 14) + 'px';
+                container.appendChild(s);
+            }
+        }
+
+        // ============================================================
+        // INIT — GAK PAKE SESSIONSTORAGE, LANGSUNG MUNCUL
         // ============================================================
         function init() {
             console.log('🚀 The C Project initialized');
 
-            // Theme
-            applyTheme(currentTheme);
+            try {
+                applyTheme(currentTheme);
 
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            document.getElementById('bottomThemeToggle').addEventListener('click', toggleTheme);
+                const themeBtn = document.getElementById('themeToggle');
+                const bottomThemeBtn = document.getElementById('bottomThemeToggle');
+                if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+                if (bottomThemeBtn) bottomThemeBtn.addEventListener('click', toggleTheme);
 
-            // Info popup
-            document.getElementById('closeInfoPopup').addEventListener('click', () => closePopup('infoPopup'));
-            document.getElementById('closeInfoBtn').addEventListener('click', () => closePopup('infoPopup'));
-            document.getElementById('infoPopup').addEventListener('click', (e) => {
-                if (e.target === e.currentTarget) closePopup('infoPopup');
-            });
+                const closeInfoPopup = document.getElementById('closeInfoPopup');
+                const closeInfoBtn = document.getElementById('closeInfoBtn');
+                const infoPopup = document.getElementById('infoPopup');
+                
+                if (closeInfoPopup) closeInfoPopup.addEventListener('click', () => closePopup('infoPopup'));
+                if (closeInfoBtn) closeInfoBtn.addEventListener('click', () => closePopup('infoPopup'));
+                if (infoPopup) {
+                    infoPopup.addEventListener('click', (e) => {
+                        if (e.target === e.currentTarget) closePopup('infoPopup');
+                    });
+                }
 
-            // Hero read button
-            document.getElementById('heroReadBtn').addEventListener('click', () => {
-                handleRead('the-time-i-never-knew');
-            });
+                const heroReadBtn = document.getElementById('heroReadBtn');
+                if (heroReadBtn) {
+                    heroReadBtn.addEventListener('click', () => {
+                        handleRead('the-time-i-never-knew');
+                    });
+                }
 
-            // Novel cards - Read buttons
-            document.querySelectorAll('.read-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    handleRead(btn.dataset.novel);
+                document.querySelectorAll('.info-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showInfo(btn.dataset.novel);
+                    });
                 });
-            });
 
-            // Novel cards - Info buttons
-            document.querySelectorAll('.info-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showInfo(btn.dataset.novel);
+                document.querySelectorAll('.novel-card').forEach(card => {
+                    card.addEventListener('click', () => showInfo(card.dataset.novel));
                 });
-            });
 
-            // Novel cards - click card for info
-            document.querySelectorAll('.novel-card').forEach(card => {
-                card.addEventListener('click', () => showInfo(card.dataset.novel));
-            });
+                const letterCloseBtn = document.getElementById('letterCloseBtn');
+                if (letterCloseBtn) letterCloseBtn.addEventListener('click', closeLetter);
 
-            // Letter close button
-            const letterCloseBtn = document.getElementById('letterCloseBtn');
-            if (letterCloseBtn) {
-                letterCloseBtn.addEventListener('click', closeLetter);
-            }
+                const rennaCloseBtn = document.getElementById('rennaCloseBtn');
+                if (rennaCloseBtn) rennaCloseBtn.addEventListener('click', closeRennaPopup);
 
-            // Escape key — cegah close letter sebelum waktunya
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    const letterOverlay = document.getElementById('letterOverlay');
-                    if (letterOverlay && letterOverlay.classList.contains('active')) {
-                        if (!letterCanClose) {
-                            showToast('⏳ Tunggu sebentar lagi...');
-                            return;
-                        } else {
-                            closeLetter();
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        const rennaOverlay = document.getElementById('rennaOverlay');
+                        if (rennaOverlay && rennaOverlay.classList.contains('active')) {
+                            closeRennaPopup();
                             return;
                         }
-                    }
-                    closePopup('infoPopup');
-                }
-            });
-
-            // Prevent overlay click closing letter
-            const letterOverlay = document.getElementById('letterOverlay');
-            if (letterOverlay) {
-                letterOverlay.addEventListener('click', (e) => {
-                    if (e.target === letterOverlay && !letterCanClose) {
-                        letterOverlay.animate(
-                            [
-                                { transform: 'translateX(0)' },
-                                { transform: 'translateX(-6px)' },
-                                { transform: 'translateX(6px)' },
-                                { transform: 'translateX(-4px)' },
-                                { transform: 'translateX(4px)' },
-                                { transform: 'translateX(0)' }
-                            ],
-                            { duration: 400, easing: 'ease-in-out' }
-                        );
+                        const letterOverlay = document.getElementById('letterOverlay');
+                        if (letterOverlay && letterOverlay.classList.contains('active')) {
+                            if (!letterCanClose) {
+                                showToast('⏳ Tunggu sebentar lagi...');
+                            } else {
+                                closeLetter();
+                            }
+                            return;
+                        }
+                        closePopup('infoPopup');
                     }
                 });
-            }
 
-            // Scroll animations
-            initReveal();
+                initReveal();
+                initBottomNav();
 
-            // Bottom nav
-            initBottomNav();
-
-            // Letter popup — muncul untuk semua pengunjung (sekali per sesi)
-            if (!sessionStorage.getItem('letterShown')) {
+                // 🔥🔥🔥 LANGSUNG MUNCULIN SURAT WELCOME — TANPA SESSIONSTORAGE 🔥🔥🔥
                 setTimeout(() => {
                     showLetter();
-                    sessionStorage.setItem('letterShown', 'true');
-                }, 700);
+                }, 500);
+
+            } catch (err) {
+                console.error('❌ Init error:', err);
+                document.body.style.overflow = 'auto';
             }
         }
 
