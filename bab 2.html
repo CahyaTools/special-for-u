@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Bab 2 — Yang Berjalan Lebih Dulu | The Time I Never Knew</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/thecproject.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <style>
+        /* ============================================================
+               ROOT VARIABLES & RESET
+            ============================================================ */
+        :root {
+            --primary: #7C5CFC;
+            --primary-dark: #5B3FD4;
+            --primary-light: #A084FF;
+            --secondary: #FF6B8A;
+            --accent: #3DDC97;
+            --gold: #FFD166;
+            --bg-dark: #0B0B1A;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A8A8C8;
+            --text-muted: #6B6B8D;
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.2);
+            
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Lora', Georgia, serif;
+            --font-hand: 'Caveat', cursive;
+            
+            --bottom-nav-height: 64px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.no-scroll { overflow: hidden; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+        /* ============================================================
+               PROGRESS BAR BACAAN
+            ============================================================ */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 9999;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(124, 92, 252, 0.5);
+        }
+
+        /* ============================================================
+               APP WRAPPER & AMBIENT
+            ============================================================ */
+        .app {
+            min-height: 100vh;
+            position: relative;
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.04) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; background: var(--primary); opacity: 0.08; }
+        .orb-2 { width: 300px; height: 300px; bottom: 100px; left: -50px; background: var(--secondary); opacity: 0.06; }
+        .orb-3 { width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--accent); opacity: 0.04; }
+
+        /* ============================================================
+               HEADER
+            ============================================================ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 16px;
+            background: rgba(11, 11, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) { .header { padding: 14px 24px; } }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .header-back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) { .header-back-btn { width: 40px; height: 40px; font-size: 15px; } }
+
+        .header-back-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: translateX(-3px);
+        }
+
+        .header-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        @media (min-width: 768px) { .header-title { font-size: 15px; } }
+
+        .header-title .chapter-num {
+            color: var(--primary-light);
+            font-weight: 800;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) { .header-btn { width: 40px; height: 40px; font-size: 15px; } }
+
+        .header-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+               MAIN CONTENT
+            ============================================================ */
+        .main-content {
+            padding: 24px 16px calc(var(--bottom-nav-height) + 40px);
+            max-width: 760px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                padding: 40px 24px 80px;
+            }
+        }
+
+        /* ============================================================
+               CHAPTER HEADER
+            ============================================================ */
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        @media (min-width: 768px) { .chapter-header { margin-bottom: 40px; padding-bottom: 32px; } }
+
+        .chapter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            background: rgba(124, 92, 252, 0.12);
+            border: 1px solid rgba(124, 92, 252, 0.2);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+        }
+
+        .chapter-badge i { font-size: 10px; }
+
+        .chapter-title {
+            font-size: clamp(1.6rem, 5vw, 2.6rem);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 60%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chapter-subtitle span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chapter-subtitle i { color: var(--primary); font-size: 11px; }
+
+        /* ============================================================
+               CHAPTER BODY
+            ============================================================ */
+        .chapter-body {
+            font-family: var(--font-serif);
+            font-size: 16.5px;
+            line-height: 2;
+            color: var(--text-secondary);
+            letter-spacing: 0.1px;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body {
+                font-size: 18px;
+                line-height: 2.05;
+            }
+        }
+
+        .chapter-body p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body p { margin-bottom: 24px; }
+        }
+
+        .chapter-body p:last-child { margin-bottom: 0; }
+
+        /* Dialogue styling */
+        .chapter-body .dialogue {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Special emphasis */
+        .chapter-body .em {
+            color: var(--primary-light);
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .chapter-body .bold-em {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Standalone emphasis line (centered, bigger) */
+        .chapter-body .standalone-line {
+            text-align: center;
+            font-size: 1.15em;
+            color: var(--gold);
+            font-weight: 500;
+            font-style: italic;
+            padding: 8px 0;
+            letter-spacing: 0.5px;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .standalone-line { font-size: 1.25em; padding: 12px 0; }
+        }
+
+        /* Quote/italic line — untuk pesan ibu */
+        .chapter-body .quote-line {
+            font-style: italic;
+            color: var(--primary-light);
+            padding: 8px 20px;
+            border-left: 3px solid rgba(124, 92, 252, 0.3);
+            margin: 20px 0;
+            background: rgba(124, 92, 252, 0.04);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .quote-line { padding: 12px 24px; }
+        }
+
+        /* Internal thought (italic) */
+        .chapter-body .thought {
+            font-style: italic;
+            color: var(--primary-light);
+            opacity: 0.9;
+        }
+
+        /* Section divider */
+        .chapter-body .divider {
+            text-align: center;
+            color: rgba(255, 209, 102, 0.4);
+            font-size: 14px;
+            letter-spacing: 8px;
+            padding: 20px 0;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .divider { padding: 28px 0; letter-spacing: 12px; }
+        }
+
+        /* Drop cap untuk paragraf pertama */
+        .chapter-body p:first-of-type::first-letter {
+            font-family: var(--font-serif);
+            font-size: 3.5em;
+            font-weight: 700;
+            float: left;
+            line-height: 0.9;
+            padding: 6px 12px 0 0;
+            color: var(--primary-light);
+            text-shadow: 0 0 30px rgba(124, 92, 252, 0.4);
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body p:first-of-type::first-letter {
+                font-size: 4em;
+                padding: 8px 14px 0 0;
+            }
+        }
+
+        /* ============================================================
+               CHAPTER NAVIGATION (Prev/Next)
+            ============================================================ */
+        .chapter-nav {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        @media (min-width: 768px) { .chapter-nav { margin-top: 64px; padding-top: 40px; } }
+
+        .chapter-nav-label {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .chapter-nav-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .chapter-nav-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .nav-chapter-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            min-height: 80px;
+        }
+
+        @media (min-width: 768px) { .nav-chapter-btn { padding: 20px 24px; border-radius: var(--radius-lg); } }
+
+        .nav-chapter-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-chapter-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 8px 30px rgba(124, 92, 252, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .nav-chapter-btn:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-chapter-btn.next {
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.08), rgba(255, 107, 138, 0.06));
+            border-color: rgba(124, 92, 252, 0.2);
+        }
+
+        .nav-chapter-btn.next:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 40px rgba(124, 92, 252, 0.3);
+        }
+
+        .nav-chapter-btn.next::before {
+            background: linear-gradient(180deg, var(--secondary), var(--gold));
+        }
+
+        .nav-btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(124, 92, 252, 0.12);
+            border: 1px solid rgba(124, 92, 252, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 15px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .nav-chapter-btn.next .nav-btn-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.4);
+        }
+
+        .nav-chapter-btn:hover .nav-btn-icon {
+            transform: scale(1.08);
+        }
+
+        .nav-btn-text {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .nav-btn-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .nav-chapter-btn.next .nav-btn-label {
+            color: var(--secondary);
+        }
+
+        .nav-btn-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) { .nav-btn-title { font-size: 16px; } }
+
+        /* ============================================================
+               END OF CHAPTER MESSAGE
+            ============================================================ */
+        .end-chapter {
+            margin-top: 40px;
+            padding: 32px 24px;
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.06), rgba(255, 107, 138, 0.04));
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) { .end-chapter { padding: 40px 32px; } }
+
+        .end-chapter::before {
+            content: "✦";
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 209, 102, 0.4);
+            font-size: 12px;
+            letter-spacing: 8px;
+        }
+
+        .end-chapter-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            animation: end-icon-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes end-icon-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .end-chapter-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) { .end-chapter-title { font-size: 18px; } }
+
+        .end-chapter-text {
+            font-family: var(--font-serif);
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-style: italic;
+            max-width: 460px;
+            margin: 0 auto 20px;
+        }
+
+        @media (min-width: 768px) {
+            .end-chapter-text { font-size: 16px; }
+        }
+
+        .end-chapter-text .em {
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .btn-lanjut {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 28px rgba(124, 92, 252, 0.4);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) { .btn-lanjut { font-size: 15px; padding: 16px 40px; } }
+
+        .btn-lanjut:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 40px rgba(124, 92, 252, 0.6);
+        }
+
+        .btn-lanjut i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-lanjut:hover i {
+            transform: translateX(4px);
+        }
+
+        /* ============================================================
+               FOOTER
+            ============================================================ */
+        .footer {
+            padding: 30px 16px 20px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 768px) { .footer { padding: 40px 24px 24px; } }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @media (min-width: 768px) { .footer-text { font-size: 13px; } }
+
+        .footer-text .brand {
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================================
+               BOTTOM NAV — MOBILE
+            ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(11, 11, 26, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-light);
+            z-index: 99;
+            display: none;
+            padding: 0 8px;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        @media (max-width: 1023px) {
+            .bottom-nav { display: block; }
+        }
+
+        .bottom-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            height: 100%;
+            align-items: center;
+            gap: 4px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 6px 4px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: var(--font);
+            border-radius: var(--radius-sm);
+            position: relative;
+        }
+
+        .bottom-nav-item i {
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .bottom-nav-item:hover,
+        .bottom-nav-item.active {
+            color: var(--primary-light);
+        }
+
+        .bottom-nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+        /* ============================================================
+               SIDEBAR DRAWER
+            ============================================================ */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1001;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background: var(--bg-dark);
+            border-right: 1px solid var(--border-light);
+            z-index: 1002;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar-brand-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+        }
+
+        .sidebar-brand-text {
+            font-size: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-close {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 50%;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 107, 138, 0.15);
+            color: var(--secondary);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px 20px;
+            overflow-y: auto;
+        }
+
+        .nav-section { margin-bottom: 6px; }
+
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            padding: 14px 14px 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            font-family: var(--font);
+            text-align: left;
+        }
+
+        .nav-link i {
+            width: 20px;
+            font-size: 15px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link:hover {
+            background: rgba(124, 92, 252, 0.08);
+            color: var(--primary-light);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: rgba(124, 92, 252, 0.12);
+            color: var(--primary-light);
+            border-left: 3px solid var(--primary);
+        }
+
+        .nav-link.sub {
+            font-size: 13px;
+            padding-left: 24px;
+            font-weight: 500;
+        }
+
+        .nav-link.sub i {
+            font-size: 12px;
+            width: 16px;
+        }
+
+        /* ============================================================
+               TOAST
+            ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: calc(var(--bottom-nav-height) + 20px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 22px;
+            border-radius: 50px;
+            background: rgba(11, 11, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
+            z-index: 2000;
+            animation: toastIn 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) { .toast { bottom: 30px; } }
+
+        .toast.out { animation: toastOut 0.4s ease forwards; }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+        }
+
+        /* ============================================================
+               SCROLL REVEAL
+            ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ============================================================
+               DARK / LIGHT MODE
+            ============================================================ */
+        [data-theme="light"] {
+            --bg-dark: #F5F3EF;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-card-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #1A1A2E;
+            --text-secondary: #3A3A5A;
+            --text-muted: #7A7A9A;
+            --border-light: rgba(0, 0, 0, 0.06);
+            --border-glow: rgba(124, 92, 252, 0.15);
+        }
+
+        [data-theme="light"] .app {
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 92, 252, 0.04) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 138, 0.03) 0%, transparent 50%),
+                        var(--bg-dark);
+        }
+
+        [data-theme="light"] .header { background: rgba(245, 243, 239, 0.85); }
+        [data-theme="light"] .bottom-nav { background: rgba(245, 243, 239, 0.92); }
+        [data-theme="light"] .sidebar { background: #FFFFFF; }
+        [data-theme="light"] .toast { background: rgba(245, 243, 239, 0.95); color: var(--text-primary); }
+        [data-theme="light"] .chapter-title {
+            background: linear-gradient(135deg, #1A1A2E 0%, var(--primary) 60%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .chapter-body { color: #3A3A5A; }
+        [data-theme="light"] .chapter-body .standalone-line { color: #B8860B; }
+        [data-theme="light"] .chapter-body .bold-em { color: #B8860B; }
+        [data-theme="light"] .chapter-body .quote-line { color: var(--primary); background: rgba(124, 92, 252, 0.06); }
+        [data-theme="light"] .end-chapter-text .em { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <!-- ===== READING PROGRESS BAR ===== -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- ===== AMBIENT ORBS ===== -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ===== APP ===== -->
+    <div class="app">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <a href="The Time I Never Knew.html" class="header-back">
+                <span class="header-back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="header-title">
+                    <span class="chapter-num">Bab 2</span> · Yang Berjalan Lebih Dulu
+                </span>
+            </a>
+            <div class="header-actions">
+                <button class="header-btn" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="header-btn" id="menuToggle" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
+
+            <!-- ===== CHAPTER HEADER ===== -->
+            <div class="chapter-header reveal">
+                <div class="chapter-badge">
+                    <i class="fas fa-bookmark"></i> Bab 2
+                </div>
+                <h1 class="chapter-title">Yang Berjalan Lebih Dulu</h1>
+                <div class="chapter-subtitle">
+                    <span><i class="fas fa-book"></i> Volume 1</span>
+                    <span>·</span>
+                    <span><i class="fas fa-clock"></i> ~7 menit baca</span>
+                </div>
+            </div>
+
+            <!-- ===== CHAPTER BODY ===== -->
+            <article class="chapter-body" id="chapterBody">
+
+                <p>Pagi itu berjalan lambat.</p>
+
+                <p>Ryou terbangun menjelang pukul sembilan.</p>
+
+                <p>Cahaya matahari telah memenuhi kamar melalui celah tirai. Ia memejamkan mata kembali, berharap masih ada alasan untuk tidur beberapa menit lagi.</p>
+
+                <p>Namun perutnya berbunyi.</p>
+
+                <p>Ryou menghela napas.</p>
+
+                <p>Ia bangun, mengambil ponsel, lalu melihat pesan dari ibunya.</p>
+
+                <p class="quote-line">Kalau sudah bangun, tolong ambil paket Ibu di konbini dekat stasiun.</p>
+
+                <p>Ryou menatap pesan itu cukup lama.</p>
+
+                <p>Tidak ada alasan untuk menolak.</p>
+
+                <p>Konbini itu hanya berjarak beberapa menit dari rumah.</p>
+
+                <p>Ryou bangkit dari tempat tidur.</p>
+
+                <p><span class="dialogue">"Baiklah."</span></p>
+
+                <p>Ia mengenakan jaket tipis, mengambil dompet dan kunci, lalu keluar rumah.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Udara pagi terasa cukup sejuk.</p>
+
+                <p>Jalan di sekitar rumah masih tenang. Beberapa sepeda terparkir di depan rumah-rumah, sementara suara kereta dari kejauhan terdengar samar di antara bangunan.</p>
+
+                <p>Ryou berjalan menuju stasiun.</p>
+
+                <p>Sudah lama ia tidak berjalan sejauh ini hanya untuk sesuatu yang begitu sederhana.</p>
+
+                <p>Sesampainya di konbini, ia menunjukkan kode pengambilan kepada kasir.</p>
+
+                <p><span class="dialogue">"Terima kasih."</span></p>
+
+                <p>Ryou menerima sebuah kotak kecil.</p>
+
+                <p>Ia memasukkannya ke dalam tas dan keluar.</p>
+
+                <p>Baru beberapa langkah, seseorang memanggil namanya.</p>
+
+                <p><span class="dialogue">"Ryou?"</span></p>
+
+                <p>Langkahnya terhenti.</p>
+
+                <p>Suara itu terasa familiar.</p>
+
+                <p>Ia menoleh.</p>
+
+                <p>Seorang lelaki berdiri tidak jauh darinya.</p>
+
+                <p>Rambutnya sedikit lebih pendek dibanding yang Ryou ingat. Ia mengenakan kemeja sederhana dengan jaket tipis, dan di sampingnya berdiri seorang perempuan yang sedang menggendong anak kecil.</p>
+
+                <p>Ryou membutuhkan beberapa detik untuk mengenalinya.</p>
+
+                <p><span class="dialogue">"...Kenta?"</span></p>
+
+                <p>Lelaki itu tersenyum lebar.</p>
+
+                <p><span class="dialogue">"Serius? Aku kira kamu sudah lupa."</span></p>
+
+                <p>Ryou tertawa kecil.</p>
+
+                <p><span class="dialogue">"Sudah lama."</span></p>
+
+                <p><span class="dialogue">"Banget."</span></p>
+
+                <p>Mereka berjabat tangan.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Kenta adalah teman sekelas Ryou ketika SMA.</p>
+
+                <p>Dulu mereka sering pulang bersama.</p>
+
+                <p>Kadang bermain gim sampai malam.</p>
+
+                <p>Kadang hanya duduk di depan toko sambil membicarakan hal-hal yang sekarang bahkan sudah tidak mereka ingat.</p>
+
+                <p>Kini mereka berdiri di tempat yang sama sebagai dua orang yang berbeda.</p>
+
+                <p><span class="dialogue">"Kamu tinggal di sekitar sini?"</span> tanya Kenta.</p>
+
+                <p><span class="dialogue">"Iya. Tidak terlalu jauh."</span></p>
+
+                <p><span class="dialogue">"Oh, pantas."</span></p>
+
+                <p>Kenta kemudian memperkenalkan perempuan di sampingnya.</p>
+
+                <p><span class="dialogue">"Istriku."</span></p>
+
+                <p>Ryou sedikit terdiam.</p>
+
+                <p><span class="dialogue">"Oh."</span></p>
+
+                <p>Ia membungkuk kecil.</p>
+
+                <p><span class="dialogue">"Senang bertemu denganmu."</span></p>
+
+                <p>Istri Kenta membalas dengan senyum sopan.</p>
+
+                <p>Anak kecil yang berada dalam gendongannya kemudian bergerak dan mengeluarkan suara kecil.</p>
+
+                <p>Kenta menatap anak itu.</p>
+
+                <p><span class="dialogue">"Anakku."</span></p>
+
+                <p>Ryou tersenyum.</p>
+
+                <p><span class="dialogue">"Lucu."</span></p>
+
+                <p><span class="dialogue">"Baru dua tahun."</span></p>
+
+                <p><span class="dialogue">"Sudah besar."</span></p>
+
+                <p>Kenta tertawa.</p>
+
+                <p><span class="dialogue">"Belum. Masih merepotkan."</span></p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Percakapan mereka berjalan ringan.</p>
+
+                <p>Mereka membicarakan beberapa teman lama.</p>
+
+                <p>Ada yang sudah menikah.</p>
+
+                <p>Ada yang pindah kota.</p>
+
+                <p>Ada yang bekerja di perusahaan besar.</p>
+
+                <p>Ada pula yang sudah tidak pernah mereka dengar kabarnya.</p>
+
+                <p>Ryou hanya sesekali mengangguk.</p>
+
+                <p>Kemudian Kenta bertanya,</p>
+
+                <p><span class="dialogue">"Kalau kamu sendiri bagaimana?"</span></p>
+
+                <p>Ryou memasukkan kedua tangannya ke dalam saku jaket.</p>
+
+                <p><span class="dialogue">"Biasa."</span></p>
+
+                <p><span class="dialogue">"Masih tinggal sama orang tua?"</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p><span class="dialogue">"Kerja?"</span></p>
+
+                <p>Ryou diam sebentar.</p>
+
+                <p><span class="dialogue">"Belum."</span></p>
+
+                <p>Kenta tidak langsung menjawab.</p>
+
+                <p>Namun tidak lama kemudian ia tersenyum.</p>
+
+                <p><span class="dialogue">"Kamu masih main game?"</span></p>
+
+                <p>Ryou ikut tersenyum.</p>
+
+                <p><span class="dialogue">"Masih."</span></p>
+
+                <p>Kenta tertawa.</p>
+
+                <p><span class="dialogue">"Hebat."</span></p>
+
+                <p><span class="dialogue">"Hm?"</span></p>
+
+                <p><span class="dialogue">"Kamu benar-benar tidak berubah."</span></p>
+
+                <p>Ryou ikut tertawa.</p>
+
+                <p>Kalimat itu terdengar seperti candaan.</p>
+
+                <p>Tidak ada nada mengejek.</p>
+
+                <p>Tidak ada maksud buruk.</p>
+
+                <p>Hanya sebuah pengamatan sederhana dari seseorang yang sudah lama tidak bertemu dengannya.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Kenta kemudian melihat jam.</p>
+
+                <p><span class="dialogue">"Maaf, kami harus pergi. Ada urusan."</span></p>
+
+                <p><span class="dialogue">"Tidak apa-apa."</span></p>
+
+                <p><span class="dialogue">"Senang bisa ketemu lagi."</span></p>
+
+                <p><span class="dialogue">"Ya."</span></p>
+
+                <p>Kenta menepuk bahu Ryou.</p>
+
+                <p><span class="dialogue">"Jaga diri."</span></p>
+
+                <p><span class="dialogue">"Kamu juga."</span></p>
+
+                <p>Mereka berpisah.</p>
+
+                <p>Kenta berjalan bersama istrinya menuju tempat parkir.</p>
+
+                <p>Ryou tetap berdiri di depan konbini.</p>
+
+                <p>Entah kenapa, ia tidak langsung pulang.</p>
+
+                <p>Ia melihat Kenta membuka pintu mobil.</p>
+
+                <p>Istrinya masuk.</p>
+
+                <p>Anaknya ditempatkan di kursi belakang.</p>
+
+                <p>Kemudian mobil itu perlahan meninggalkan tempat parkir.</p>
+
+                <p>Ryou memperhatikannya sampai kendaraan itu menghilang di ujung jalan.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Baru setelah itu ia berjalan pulang.</p>
+
+                <p>Langkahnya terasa lebih lambat.</p>
+
+                <p>Dulu, Kenta dan dirinya tidak jauh berbeda.</p>
+
+                <p>Mereka duduk di kelas yang sama.</p>
+
+                <p>Mengeluhkan guru yang sama.</p>
+
+                <p>Tertawa karena hal-hal yang sama.</p>
+
+                <p>Mereka pernah membicarakan masa depan seolah masa depan itu masih terlalu jauh untuk dipikirkan.</p>
+
+                <p>Namun sekarang...</p>
+
+                <p>Kenta sudah memiliki pekerjaan.</p>
+
+                <p>Istri.</p>
+
+                <p>Anak.</p>
+
+                <p>Sebuah kehidupan yang terus bertambah.</p>
+
+                <p>Sementara Ryou masih berada di kamar yang sama.</p>
+
+                <p>Masih memainkan permainan yang sama.</p>
+
+                <p>Masih mengatakan hal yang sama.</p>
+
+                <p><span class="bold-em">Nanti.</span></p>
+
+                <p>Ia berhenti di depan lampu merah.</p>
+
+                <p>Untuk pertama kalinya, Ryou bertanya kepada dirinya sendiri.</p>
+
+                <p>Bukan mengapa Kenta bisa sejauh itu.</p>
+
+                <p>Bukan pula mengapa dirinya tertinggal.</p>
+
+                <p>Tetapi...</p>
+
+                <p class="standalone-line">Sejak kapan mereka berjalan ke arah yang berbeda?</p>
+
+                <p>Lampu berubah hijau.</p>
+
+                <p>Ryou kembali berjalan.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Sesampainya di rumah, ia menyerahkan paket kepada ibunya.</p>
+
+                <p><span class="dialogue">"Sudah diambil?"</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p><span class="dialogue">"Terima kasih."</span></p>
+
+                <p>Ryou mengangguk.</p>
+
+                <p>Ia hendak kembali ke kamar, tetapi berhenti di ruang tengah.</p>
+
+                <p>Ayahnya sedang membaca koran.</p>
+
+                <p><span class="dialogue">"Ayah."</span></p>
+
+                <p><span class="dialogue">"Hm?"</span></p>
+
+                <p><span class="dialogue">"Kenta sudah menikah."</span></p>
+
+                <p>Ayahnya menurunkan koran.</p>
+
+                <p><span class="dialogue">"Oh, teman sekolahmu itu?"</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p><span class="dialogue">"Baguslah."</span></p>
+
+                <p>Ryou mengangguk.</p>
+
+                <p>Kemudian kembali ke kamar.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Komputernya masih menyala.</p>
+
+                <p>Permainan yang ia tinggalkan kemarin masih terbuka.</p>
+
+                <p>Ryou duduk di depan layar.</p>
+
+                <p>Tangannya perlahan meraih tetikus.</p>
+
+                <p>Namun kali ini ia tidak langsung memainkannya.</p>
+
+                <p>Ia hanya menatap layar.</p>
+
+                <p>Lalu, tanpa sadar, teringat wajah Kenta.</p>
+
+                <p><span class="thought">Benar-benar tidak berubah.</span></p>
+
+                <p>Ryou tersenyum kecil.</p>
+
+                <p>Entah mengapa, kalimat sederhana itu terasa lebih berat sekarang.</p>
+
+                <p>Ia mematikan komputer.</p>
+
+                <p>Kamar menjadi sunyi.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Di luar, kehidupan tetap berjalan.</p>
+
+                <p>Kereta datang dan pergi.</p>
+
+                <p>Orang-orang berangkat bekerja.</p>
+
+                <p>Anak-anak pergi ke sekolah.</p>
+
+                <p>Seseorang mungkin sedang jatuh cinta.</p>
+
+                <p>Seseorang mungkin sedang memulai kehidupan baru.</p>
+
+                <p>Dan waktu terus membawa semuanya pergi.</p>
+
+                <p>Ryou hanya berdiri di tengah semua itu.</p>
+
+                <p>Tidak gagal.</p>
+
+                <p>Tidak pula berhasil.</p>
+
+                <p>Hanya diam.</p>
+
+                <p>Menunggu hari yang entah kapan akan ia mulai.</p>
+
+            </article>
+
+            <!-- ===== END OF CHAPTER + LANJUT BAB 3 ===== -->
+            <div class="end-chapter reveal">
+                <div class="end-chapter-icon">🌆</div>
+                <div class="end-chapter-title">Akhir Bab 2</div>
+                <p class="end-chapter-text">
+                    Malam itu, Ryou kembali membuat janji pada dirinya sendiri.<br>
+                    Sebuah janji yang sama... <span class="em">dan sebuah kata yang sama.</span>
+                </p>
+                <a href="bab 3.html" class="btn-lanjut">
+                    Lanjut ke Bab 3 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- ===== CHAPTER NAVIGATION ===== -->
+            <nav class="chapter-nav reveal">
+                <div class="chapter-nav-label">Navigasi Bab</div>
+                <div class="chapter-nav-buttons">
+
+                    <!-- Prev: Bab 1 -->
+                    <a href="bab1.html" class="nav-chapter-btn">
+                        <span class="nav-btn-icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="nav-btn-text">
+                            <span class="nav-btn-label">Bab Sebelumnya</span>
+                            <span class="nav-btn-title">Bab 1 — Kemenangan</span>
+                        </span>
+                    </a>
+
+                    <!-- Next: Bab 3 -->
+                    <a href="bab 3.html" class="nav-chapter-btn next">
+                        <span class="nav-btn-text" style="text-align: right;">
+                            <span class="nav-btn-label">Bab Selanjutnya</span>
+                            <span class="nav-btn-title">Bab 3 — Besok</span>
+                        </span>
+                        <span class="nav-btn-icon">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                </div>
+            </nav>
+
+        </main>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-text">
+                &copy; 2025 <span class="brand">The C Project</span> · by Cahya. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== BOTTOM NAV (MOBILE) ===== -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-grid">
+            <a href="index.html" class="bottom-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="#" class="bottom-nav-item">
+                <i class="fas fa-book"></i>
+                <span>Novel</span>
+            </a>
+            <a href="#" class="bottom-nav-item active">
+                <i class="fas fa-book-open"></i>
+                <span>Bab 2</span>
+            </a>
+            <a href="bab 3.html" class="bottom-nav-item">
+                <i class="fas fa-arrow-right"></i>
+                <span>Bab 3</span>
+            </a>
+            <button class="bottom-nav-item" id="mobileMenuToggle">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Lainnya</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== SIDEBAR DRAWER ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">
+                <div class="sidebar-brand-icon">C</div>
+                <span class="sidebar-brand-text">The C Project</span>
+            </a>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Menu Utama</div>
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="The Time I Never Knew.html" class="nav-link active">
+                    <i class="fas fa-book"></i> The Time I Never Knew
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Volume 1</div>
+                <a href="bab1.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 1 — Kemenangan
+                </a>
+                <a href="bab 2.html" class="nav-link sub active">
+                    <i class="fas fa-bookmark"></i> Bab 2 — Yang Berjalan Lebih Dulu
+                </a>
+                <a href="bab 3.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 3 — Besok
+                </a>
+                <a href="bab 4.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 4 — Haruto
+                </a>
+                <a href="bab 5.html" class="nav-link sub">
+                    <i class="fas fa-bookmark"></i> Bab 5 — Kehidupan Yang Bukan Milikku
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Lainnya</div>
+                <a href="#community" class="nav-link">
+                    <i class="fas fa-users"></i> Komunitas
+                </a>
+                <button class="nav-link" id="sidebarThemeToggle">
+                    <i class="fas fa-moon"></i> Mode Gelap
+                </button>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // ============================================================
+        //  THEME
+        // ============================================================
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+            document.querySelectorAll('#themeToggle i, #sidebarThemeToggle i').forEach(i => {
+                i.className = `fas ${icon}`;
+            });
+
+            const sidebarToggle = document.getElementById('sidebarThemeToggle');
+            if (sidebarToggle) {
+                const textNode = Array.from(sidebarToggle.childNodes)
+                    .find(n => n.nodeType === 3 && n.textContent.trim());
+                if (textNode) {
+                    textNode.textContent = theme === 'dark' ? ' Mode Gelap' : ' Mode Terang';
+                }
+            }
+        }
+
+        function toggleTheme() {
+            const next = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            showToast(next === 'dark' ? '🌙 Mode Gelap' : '☀️ Mode Terang');
+        }
+
+        // ============================================================
+        //  TOAST
+        // ============================================================
+        function showToast(msg) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.textContent = msg;
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.classList.add('out');
+                setTimeout(() => el.remove(), 400);
+            }, 2500);
+        }
+
+        // ============================================================
+        //  SIDEBAR
+        // ============================================================
+        function initSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            function openSidebar() {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+                document.body.classList.add('no-scroll');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            }
+
+            document.getElementById('menuToggle')?.addEventListener('click', openSidebar);
+            document.getElementById('mobileMenuToggle')?.addEventListener('click', openSidebar);
+            document.getElementById('sidebarClose')?.addEventListener('click', closeSidebar);
+            overlay?.addEventListener('click', closeSidebar);
+
+            sidebar.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (link.tagName === 'A') {
+                        setTimeout(closeSidebar, 200);
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        //  READING PROGRESS
+        // ============================================================
+        function initReadingProgress() {
+            const progressBar = document.getElementById('readingProgress');
+            if (!progressBar) return;
+
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                        progressBar.style.width = Math.min(progress, 100) + '%';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
+
+        // ============================================================
+        //  SCROLL REVEAL
+        // ============================================================
+        function initReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // ============================================================
+        //  ESC KEY
+        // ============================================================
+        function initEscKey() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    document.getElementById('sidebarOverlay')?.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+        }
+
+        // ============================================================
+        //  KEYBOARD NAVIGATION (← →)
+        // ============================================================
+        function initKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.key === 'ArrowRight') {
+                    window.location.href = 'bab 3.html';
+                } else if (e.key === 'ArrowLeft') {
+                    window.location.href = 'bab 1.html';
+                }
+            });
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        function init() {
+            console.log('📖 Bab 2 — Yang Berjalan Lebih Dulu — loaded');
+
+            applyTheme(currentTheme);
+
+            document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+            document.getElementById('sidebarThemeToggle')?.addEventListener('click', toggleTheme);
+
+            initSidebar();
+            initReadingProgress();
+            initReveal();
+            initEscKey();
+            initKeyboardNav();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
