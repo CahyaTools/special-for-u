@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <title>Bab 3 — Besok | The Time I Never Knew</title>
+    <title>Bab 4 — Haruto | The Time I Never Knew</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/thecproject.png" />
@@ -372,65 +372,70 @@
             opacity: 0.9;
         }
 
-        /* ===== NOTE/CHECKLIST BOX — untuk 4 rencana Ryou ===== */
-        .chapter-body .note-box {
-            background: linear-gradient(135deg, rgba(255, 209, 102, 0.06), rgba(124, 92, 252, 0.06));
-            border: 1px solid rgba(255, 209, 102, 0.2);
-            border-radius: var(--radius-md);
-            padding: 20px 24px;
-            margin: 24px 0;
+        /* ===== CHAT BUBBLE — untuk pesan ponsel ===== */
+        .chapter-body .chat-bubble {
+            background: linear-gradient(135deg, rgba(124, 92, 252, 0.1), rgba(255, 107, 138, 0.06));
+            border: 1px solid rgba(124, 92, 252, 0.2);
+            border-radius: 18px 18px 18px 4px;
+            padding: 12px 18px;
+            margin: 16px 0 16px 24px;
+            max-width: 85%;
             position: relative;
-            box-shadow: 0 8px 30px rgba(255, 209, 102, 0.06);
-        }
-
-        @media (min-width: 768px) {
-            .chapter-body .note-box { padding: 24px 28px; }
-        }
-
-        .chapter-body .note-box::before {
-            content: "📝";
-            position: absolute;
-            top: -14px;
-            left: 20px;
-            font-size: 22px;
-            background: var(--bg-dark);
-            padding: 0 8px;
-            border-radius: 4px;
-        }
-
-        .chapter-body .note-box ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .chapter-body .note-box li {
-            font-family: var(--font-serif);
-            font-size: 16px;
-            color: var(--text-secondary);
-            padding: 8px 0 8px 28px;
-            position: relative;
-            line-height: 1.6;
-            border-bottom: 1px dashed rgba(255, 209, 102, 0.15);
-        }
-
-        @media (min-width: 768px) {
-            .chapter-body .note-box li { font-size: 17px; }
-        }
-
-        .chapter-body .note-box li:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .chapter-body .note-box li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            top: 8px;
-            color: var(--gold);
-            font-weight: 700;
+            font-family: var(--font);
             font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+            line-height: 1.6;
+            box-shadow: 0 6px 20px rgba(124, 92, 252, 0.08);
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .chat-bubble { font-size: 15px; padding: 14px 20px; margin-left: 40px; }
+        }
+
+        .chapter-body .chat-bubble::before {
+            content: "📱";
+            position: absolute;
+            left: -28px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        .chapter-body .chat-bubble .from {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 3px;
+            font-family: var(--font);
+        }
+
+        /* Reply bubble (dari Haruto) */
+        .chapter-body .chat-bubble.reply {
+            background: linear-gradient(135deg, rgba(61, 220, 151, 0.08), rgba(124, 92, 252, 0.06));
+            border-color: rgba(61, 220, 151, 0.2);
+            border-radius: 18px 18px 4px 18px;
+            margin-left: auto;
+            margin-right: 24px;
+            text-align: right;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .chat-bubble.reply { margin-right: 40px; }
+        }
+
+        .chapter-body .chat-bubble.reply::before {
+            content: "✉️";
+            left: auto;
+            right: -28px;
+        }
+
+        .chapter-body .chat-bubble.reply .from {
+            color: var(--accent);
         }
 
         /* Section divider */
@@ -445,6 +450,20 @@
 
         @media (min-width: 768px) {
             .chapter-body .divider { padding: 28px 0; letter-spacing: 12px; }
+        }
+
+        /* Divider khusus untuk scene break — pakai line "—" */
+        .chapter-body .scene-break {
+            text-align: center;
+            color: rgba(124, 92, 252, 0.4);
+            font-size: 16px;
+            letter-spacing: 12px;
+            padding: 24px 0;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .chapter-body .scene-break { padding: 32px 0; letter-spacing: 16px; }
         }
 
         /* Drop cap untuk paragraf pertama */
@@ -1073,8 +1092,8 @@
         [data-theme="light"] .chapter-body .standalone-line { color: #B8860B; }
         [data-theme="light"] .chapter-body .bold-em { color: #B8860B; }
         [data-theme="light"] .chapter-body .quote-line { color: var(--primary); background: rgba(124, 92, 252, 0.06); }
-        [data-theme="light"] .chapter-body .note-box { background: linear-gradient(135deg, rgba(255, 209, 102, 0.1), rgba(124, 92, 252, 0.06)); }
-        [data-theme="light"] .chapter-body .note-box::before { background: #F5F3EF; }
+        [data-theme="light"] .chapter-body .chat-bubble { background: linear-gradient(135deg, rgba(124, 92, 252, 0.1), rgba(255, 107, 138, 0.06)); color: #1A1A2E; }
+        [data-theme="light"] .chapter-body .chat-bubble.reply { background: linear-gradient(135deg, rgba(61, 220, 151, 0.12), rgba(124, 92, 252, 0.06)); }
         [data-theme="light"] .end-chapter-text .em { color: var(--primary); }
     </style>
 </head>
@@ -1098,7 +1117,7 @@
                     <i class="fas fa-arrow-left"></i>
                 </span>
                 <span class="header-title">
-                    <span class="chapter-num">Bab 3</span> · Besok
+                    <span class="chapter-num">Bab 4</span> · Haruto
                 </span>
             </a>
             <div class="header-actions">
@@ -1117,205 +1136,650 @@
             <!-- ===== CHAPTER HEADER ===== -->
             <div class="chapter-header reveal">
                 <div class="chapter-badge">
-                    <i class="fas fa-bookmark"></i> Bab 3
+                    <i class="fas fa-bookmark"></i> Bab 4
                 </div>
-                <h1 class="chapter-title">Besok</h1>
+                <h1 class="chapter-title">Haruto</h1>
                 <div class="chapter-subtitle">
                     <span><i class="fas fa-book"></i> Volume 1</span>
                     <span>·</span>
-                    <span><i class="fas fa-clock"></i> ~5 menit baca</span>
+                    <span><i class="fas fa-clock"></i> ~8 menit baca</span>
                 </div>
             </div>
 
             <!-- ===== CHAPTER BODY ===== -->
             <article class="chapter-body" id="chapterBody">
 
-                <p>Malam telah larut.</p>
+                <p>Pagi di Kota Osaka sudah ramai ketika seorang pemuda berlari menyusuri trotoar.</p>
 
-                <p>Rumah sudah jauh lebih tenang dibanding siang tadi.</p>
+                <p>Tasnya bergoyang di bahu.</p>
 
-                <p>Ryou berjalan keluar dari kamarnya untuk mengambil air.</p>
+                <p>Napasnya mulai terengah.</p>
 
-                <p>Saat melewati ruang tengah, langkahnya terhenti.</p>
+                <p><span class="dialogue">"Permisi!"</span></p>
 
-                <p>Ayah dan ibunya sudah tidur.</p>
+                <p>Ia melewati beberapa orang sebelum akhirnya berhenti di depan sebuah kedai kecil.</p>
 
-                <p>Televisi masih menyala tanpa suara.</p>
+                <p>Seorang pemuda lain sudah berdiri di sana sambil melihat jam tangannya.</p>
 
-                <p>Ayahnya tertidur di sofa dengan kacamata yang belum dilepas. Sebuah buku tergeletak di dadanya.</p>
+                <p><span class="dialogue">"Kamu terlambat."</span></p>
 
-                <p>Ryou berdiri beberapa saat.</p>
+                <p>Haruto membungkuk sambil mengatur napas.</p>
 
-                <p>Ia tidak ingat kapan terakhir kali melihat ayahnya tertidur seperti itu.</p>
+                <p><span class="dialogue">"Maaf."</span></p>
 
-                <p>Rambut yang dahulu hitam kini semakin banyak memutih.</p>
+                <p><span class="dialogue">"Katanya sepuluh menit."</span></p>
 
-                <p>Wajahnya juga tampak lebih tua daripada yang Ryou bayangkan.</p>
+                <p><span class="dialogue">"Aku salah menghitung."</span></p>
 
-                <p>Ryou memandang ibunya.</p>
+                <p><span class="dialogue">"Bagaimana bisa salah menghitung sepuluh menit?"</span></p>
 
-                <p>Perempuan itu tidur di sofa lain, dengan selimut tipis menutupi tubuhnya.</p>
+                <p>Haruto mengangkat wajahnya.</p>
 
-                <p>Tiba-tiba Ryou merasa asing dengan pemandangan itu.</p>
+                <p><span class="dialogue">"Entahlah."</span></p>
 
-                <p>Bukan karena ada sesuatu yang berubah.</p>
+                <p>Temannya menatapnya beberapa detik.</p>
 
-                <p>Justru karena semuanya perlahan berubah tanpa ia sadari.</p>
+                <p>Kemudian tertawa.</p>
 
-                <div class="divider">✦ ✦ ✦</div>
+                <p><span class="dialogue">"Kamu memang tidak berubah."</span></p>
 
-                <p>Ia mengambil gelas dari dapur, mengisinya dengan air, lalu kembali ke kamar.</p>
+                <p>Haruto ikut tertawa.</p>
 
-                <p>Pintu ditutup pelan.</p>
+                <p>Mereka masuk ke dalam kedai.</p>
 
-                <p>Ryou berdiri di depan cermin.</p>
+                <div class="scene-break">—</div>
 
-                <p>Bayangannya menatap balik.</p>
+                <p>Di dalam sudah ada beberapa teman mereka yang lain.</p>
 
-                <p>Rambut berantakan.</p>
+                <p><span class="dialogue">"Haruto!"</span></p>
 
-                <p>Kacamata.</p>
+                <p><span class="dialogue">"Lama sekali!"</span></p>
 
-                <p>Tubuh yang mulai terlalu berat untuk diabaikan.</p>
+                <p><span class="dialogue">"Sudah dibilang jam sepuluh!"</span></p>
 
-                <p>Ryou menarik napas.</p>
+                <p><span class="dialogue">"Iya, iya. Aku minta maaf."</span></p>
 
-                <p><span class="dialogue">"Baiklah."</span></p>
+                <p>Haruto duduk di antara mereka.</p>
 
-                <p>Ia meletakkan kacamatanya.</p>
+                <p>Suasana langsung kembali ramai.</p>
 
-                <p>Kemudian turun ke lantai.</p>
+                <p>Tidak ada yang benar-benar marah.</p>
 
-                <p>Kedua telapak tangannya bertumpu di lantai.</p>
+                <p>Mereka hanya sudah terbiasa dengan kebiasaan Haruto yang kadang terlambat.</p>
 
-                <p>Ia mencoba melakukan push-up.</p>
+                <p>Hari itu mereka berencana menghabiskan waktu bersama.</p>
 
-                <p>Satu.</p>
+                <p>Tidak ada tujuan penting.</p>
 
-                <p>Dua.</p>
+                <p>Tidak ada acara besar.</p>
 
-                <p>Tiga.</p>
+                <p>Mereka hanya ingin bersenang-senang sebelum masing-masing kembali pada kesibukannya.</p>
 
-                <p>Lengannya gemetar.</p>
+                <p>Beberapa jam berlalu begitu saja.</p>
 
-                <p>Ryou berhenti.</p>
+                <p>Mereka bermain.</p>
 
-                <p>Ia membalikkan tubuh dan berbaring telentang.</p>
+                <p>Bercanda.</p>
 
-                <p><span class="dialogue">"...Astaga."</span></p>
+                <p>Saling mengejek.</p>
 
-                <p>Beberapa detik kemudian ia tertawa sendiri.</p>
+                <p>Sesekali berdebat hanya karena hal-hal kecil.</p>
 
-                <p>Tiga kali.</p>
+                <p>Haruto tertawa paling keras ketika salah satu temannya kalah dalam permainan.</p>
 
-                <p>Hanya tiga.</p>
+                <p><span class="dialogue">"Jangan ketawa!"</span></p>
 
-                <p>Namun setidaknya ia benar-benar mencoba.</p>
+                <p><span class="dialogue">"Bagaimana aku tidak tertawa?"</span></p>
 
-                <div class="divider">✦ ✦ ✦</div>
+                <p><span class="dialogue">"Giliran kamu nanti."</span></p>
 
-                <p>Ryou bangkit dan duduk di tepi tempat tidur.</p>
+                <p><span class="dialogue">"Kalau aku kalah, aku traktir."</span></p>
 
-                <p>Matanya tertuju pada komputer.</p>
+                <p><span class="dialogue">"Janji?"</span></p>
 
-                <p>Layar masih gelap.</p>
+                <p><span class="dialogue">"Janji."</span></p>
 
-                <p>Biasanya, pada jam seperti ini, ia akan menyalakannya.</p>
+                <p><span class="dialogue">"Catat itu!"</span></p>
 
-                <p>Satu pertandingan.</p>
+                <p>Haruto mengangkat kedua tangannya.</p>
 
-                <p>Kemudian satu lagi.</p>
-
-                <p>Lalu tahu-tahu pagi sudah datang.</p>
-
-                <p>Tangannya hampir meraih tetikus.</p>
-
-                <p>Namun berhenti.</p>
-
-                <p>Ryou menatap tangannya sendiri.</p>
-
-                <p>Kemudian menarik napas.</p>
-
-                <p><span class="dialogue">"Tidak malam ini."</span></p>
+                <p><span class="dialogue">"Iya, iya."</span></p>
 
                 <div class="divider">✦ ✦ ✦</div>
 
-                <p>Ia mengambil selembar kertas dari laci meja.</p>
+                <p>Siang datang tanpa terasa.</p>
 
-                <p>Mencari pulpen.</p>
+                <p>Setelah makan, beberapa teman mereka mulai berpamitan.</p>
 
-                <p>Beberapa saat ia hanya menatap kertas kosong itu.</p>
+                <p><span class="dialogue">"Aku pulang dulu."</span></p>
 
-                <p>Lalu mulai menulis.</p>
+                <p><span class="dialogue">"Besok jangan lupa."</span></p>
 
-                <!-- NOTE BOX: 4 rencana Ryou -->
-                <div class="note-box">
-                    <ul>
-                        <li>Cari kerja.</li>
-                        <li>Olahraga.</li>
-                        <li>Bantu Ibu.</li>
-                        <li>Ngobrol sama Ayah.</li>
-                    </ul>
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p>Satu per satu mereka pergi.</p>
+
+                <p>Haruto masih berdiri di depan tempat itu.</p>
+
+                <p>Seorang temannya menepuk bahunya.</p>
+
+                <p><span class="dialogue">"Kamu setelah ini ke mana?"</span></p>
+
+                <p><span class="dialogue">"Ketemu Aoi."</span></p>
+
+                <p><span class="dialogue">"Lagi?"</span></p>
+
+                <p>Haruto tersenyum.</p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p>Temannya menggeleng.</p>
+
+                <p><span class="dialogue">"Kalian hampir setiap hari bertemu."</span></p>
+
+                <p><span class="dialogue">"Memangnya kenapa?"</span></p>
+
+                <p><span class="dialogue">"Tidak bosan?"</span></p>
+
+                <p>Haruto berpikir sebentar.</p>
+
+                <p><span class="dialogue">"Belum."</span></p>
+
+                <p>Temannya tertawa.</p>
+
+                <p><span class="dialogue">"Dasar."</span></p>
+
+                <p>Haruto melambaikan tangan.</p>
+
+                <p><span class="dialogue">"Sampai besok."</span></p>
+
+                <p><span class="dialogue">"Sampai besok."</span></p>
+
+                <p>Ia kemudian berjalan pergi.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Aoi sudah menunggunya di sebuah taman.</p>
+
+                <p>Begitu melihat Haruto, ia langsung melihat jam.</p>
+
+                <p><span class="dialogue">"Kamu terlambat."</span></p>
+
+                <p>Haruto berhenti.</p>
+
+                <p><span class="dialogue">"Cuma sedikit."</span></p>
+
+                <p><span class="dialogue">"Dua puluh menit."</span></p>
+
+                <p><span class="dialogue">"Masih sedikit."</span></p>
+
+                <p>Aoi menggeleng.</p>
+
+                <p><span class="dialogue">"Kamu selalu punya alasan."</span></p>
+
+                <p>Haruto tersenyum.</p>
+
+                <p><span class="dialogue">"Maaf."</span></p>
+
+                <p>Mereka berjalan berdampingan.</p>
+
+                <p>Tidak ada tujuan khusus.</p>
+
+                <p>Mereka hanya menghabiskan sore bersama.</p>
+
+                <p>Membeli minuman.</p>
+
+                <p>Berhenti di sebuah toko.</p>
+
+                <p>Berjalan tanpa arah.</p>
+
+                <p>Membicarakan hal-hal kecil.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Aoi tiba-tiba bertanya,</p>
+
+                <p><span class="dialogue">"Haruto."</span></p>
+
+                <p><span class="dialogue">"Hm?"</span></p>
+
+                <p><span class="dialogue">"Kalau kamu bisa melakukan apa saja, kamu ingin apa?"</span></p>
+
+                <p>Haruto menoleh.</p>
+
+                <p><span class="dialogue">"Apa maksudnya?"</span></p>
+
+                <p><span class="dialogue">"Entahlah."</span></p>
+
+                <p>Aoi mengangkat bahu.</p>
+
+                <p><span class="dialogue">"Misalnya kamu punya banyak waktu dan tidak perlu memikirkan apa pun."</span></p>
+
+                <p>Haruto terdiam.</p>
+
+                <p>Ia berpikir beberapa saat.</p>
+
+                <p><span class="dialogue">"Banyak."</span></p>
+
+                <p>Aoi tertawa kecil.</p>
+
+                <p><span class="dialogue">"Itu bukan jawaban."</span></p>
+
+                <p><span class="dialogue">"Memangnya kenapa?"</span></p>
+
+                <p><span class="dialogue">"Setidaknya sebutkan satu."</span></p>
+
+                <p>Haruto mulai menghitung dengan jarinya.</p>
+
+                <p><span class="dialogue">"Aku ingin pergi ke tempat yang belum pernah aku datangi."</span></p>
+
+                <p>Satu jari.</p>
+
+                <p><span class="dialogue">"Makan makanan yang belum pernah aku coba."</span></p>
+
+                <p>Jari kedua.</p>
+
+                <p><span class="dialogue">"Pergi bersama teman-teman."</span></p>
+
+                <p>Jari ketiga.</p>
+
+                <p><span class="dialogue">"Bikin Ayah dan Ibu mengajakku tinggal sendiri."</span></p>
+
+                <p>Aoi tertawa.</p>
+
+                <p><span class="dialogue">"Yang terakhir itu sepertinya sulit."</span></p>
+
+                <p><span class="dialogue">"Memang."</span></p>
+
+                <p>Haruto ikut tertawa.</p>
+
+                <p>Ia kemudian menatap Aoi.</p>
+
+                <p><span class="dialogue">"Dan..."</span></p>
+
+                <p><span class="dialogue">"Dan?"</span></p>
+
+                <p>Haruto tersenyum.</p>
+
+                <p><span class="dialogue">"Menikah."</span></p>
+
+                <p>Aoi langsung berhenti berjalan.</p>
+
+                <p>Haruto ikut berhenti.</p>
+
+                <p><span class="dialogue">"Kenapa?"</span></p>
+
+                <p><span class="dialogue">"Kamu bicara terlalu jauh."</span></p>
+
+                <p><span class="dialogue">"Memangnya tidak boleh?"</span></p>
+
+                <p>Aoi memalingkan wajah.</p>
+
+                <p><span class="dialogue">"Boleh."</span></p>
+
+                <p>Haruto tertawa kecil.</p>
+
+                <p>Mereka kembali berjalan.</p>
+
+                <p>Beberapa langkah kemudian, Aoi berkata,</p>
+
+                <p><span class="dialogue">"Kalau begitu, kamu harus hidup lama."</span></p>
+
+                <p>Haruto menoleh.</p>
+
+                <p>Aoi tidak menjelaskan maksudnya.</p>
+
+                <p>Ia hanya terus berjalan.</p>
+
+                <p>Haruto tersenyum.</p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <div class="scene-break">—</div>
+
+                <p>Menjelang sore, mereka duduk di bangku taman.</p>
+
+                <p>Matahari mulai turun.</p>
+
+                <p>Aoi memainkan sedotan minumannya.</p>
+
+                <p><span class="dialogue">"Besok jadi?"</span></p>
+
+                <p><span class="dialogue">"Jadi."</span></p>
+
+                <p><span class="dialogue">"Jangan terlambat."</span></p>
+
+                <p>Haruto tertawa.</p>
+
+                <p><span class="dialogue">"Aku usahakan."</span></p>
+
+                <p><span class="dialogue">"Bukan usahakan."</span></p>
+
+                <p>Aoi menatapnya.</p>
+
+                <p><span class="dialogue">"Jangan terlambat."</span></p>
+
+                <p>Haruto mengangguk.</p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p>Mereka diam sebentar.</p>
+
+                <p>Angin sore melewati pepohonan.</p>
+
+                <p>Tidak ada percakapan penting.</p>
+
+                <p>Tidak ada janji besar.</p>
+
+                <p>Hanya dua orang yang menikmati waktu bersama.</p>
+
+                <p>Ketika langit mulai gelap, mereka akhirnya berpisah.</p>
+
+                <p><span class="dialogue">"Pulang hati-hati."</span></p>
+
+                <p><span class="dialogue">"Kamu juga."</span></p>
+
+                <p><span class="dialogue">"Besok ketemu lagi."</span></p>
+
+                <p>Haruto mengangkat tangan.</p>
+
+                <p><span class="dialogue">"Sampai besok."</span></p>
+
+                <div class="scene-break">—</div>
+
+                <p>Rumah Haruto tidak terlalu jauh.</p>
+
+                <p>Ketika pintu dibuka, suara televisi langsung terdengar dari ruang tengah.</p>
+
+                <p><span class="dialogue">"Kamu pulang?"</span></p>
+
+                <p><span class="dialogue">"Iya, Bu."</span></p>
+
+                <p>Ibunya muncul dari dapur.</p>
+
+                <p><span class="dialogue">"Sudah makan?"</span></p>
+
+                <p><span class="dialogue">"Sudah."</span></p>
+
+                <p><span class="dialogue">"Bagus."</span></p>
+
+                <p>Ayahnya menoleh dari sofa.</p>
+
+                <p><span class="dialogue">"Kamu pulang terlambat lagi."</span></p>
+
+                <p><span class="dialogue">"Tidak terlambat."</span></p>
+
+                <p><span class="dialogue">"Jam segini namanya terlambat."</span></p>
+
+                <p>Haruto tertawa.</p>
+
+                <p><span class="dialogue">"Ayah saja yang terlalu cepat mengantuk."</span></p>
+
+                <p>Ayahnya mendengus.</p>
+
+                <p><span class="dialogue">"Anak muda."</span></p>
+
+                <p>Dari tangga, sebuah suara terdengar.</p>
+
+                <p><span class="dialogue">"Kak!"</span></p>
+
+                <p>Haruto menoleh.</p>
+
+                <p>Adiknya melempar sebuah bantal.</p>
+
+                <p>Haruto menangkapnya.</p>
+
+                <p><span class="dialogue">"Kenapa?"</span></p>
+
+                <p><span class="dialogue">"Kamu belum mengembalikan charger-ku."</span></p>
+
+                <p><span class="dialogue">"Oh."</span></p>
+
+                <p>Haruto terdiam.</p>
+
+                <p>Lalu tertawa.</p>
+
+                <p><span class="dialogue">"Lupa."</span></p>
+
+                <p><span class="dialogue">"Dari kemarin!"</span></p>
+
+                <p><span class="dialogue">"Iya, besok."</span></p>
+
+                <p><span class="dialogue">"Jangan besok lagi!"</span></p>
+
+                <p>Haruto melempar bantal itu kembali.</p>
+
+                <p>Adiknya menghindar.</p>
+
+                <p><span class="dialogue">"Berisik!"</span></p>
+
+                <p>Ibunya langsung menegur dari dapur.</p>
+
+                <p><span class="dialogue">"Jangan ribut!"</span></p>
+
+                <p>Mereka semua tertawa.</p>
+
+                <p>Haruto berdiri di tengah ruang keluarga.</p>
+
+                <p>Televisi masih menyala.</p>
+
+                <p>Ibunya kembali memasak.</p>
+
+                <p>Ayahnya mengomel tentang acara televisi.</p>
+
+                <p>Adiknya masih mengeluh soal charger.</p>
+
+                <p>Tidak ada sesuatu yang luar biasa.</p>
+
+                <p>Tidak ada kejadian besar.</p>
+
+                <p>Hanya sebuah rumah yang ramai.</p>
+
+                <p>Dan sebuah keluarga yang masih lengkap.</p>
+
+                <p>Haruto tersenyum.</p>
+
+                <p><span class="dialogue">"Bu."</span></p>
+
+                <p><span class="dialogue">"Hm?"</span></p>
+
+                <p><span class="dialogue">"Besok kita makan di luar, yuk."</span></p>
+
+                <p>Ibunya menoleh.</p>
+
+                <p><span class="dialogue">"Besok?"</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p><span class="dialogue">"Kamu bukannya ada acara?"</span></p>
+
+                <p><span class="dialogue">"Ada. Tapi masih sempat."</span></p>
+
+                <p>Ayahnya langsung menyela.</p>
+
+                <p><span class="dialogue">"Jangan pulang terlambat."</span></p>
+
+                <p><span class="dialogue">"Iya."</span></p>
+
+                <p>Adiknya mengangkat tangan.</p>
+
+                <p><span class="dialogue">"Aku ikut."</span></p>
+
+                <p><span class="dialogue">"Kamu bayar sendiri."</span></p>
+
+                <p><span class="dialogue">"Peliiiit!"</span></p>
+
+                <p>Haruto tertawa.</p>
+
+                <div class="scene-break">—</div>
+
+                <p>Malam semakin larut.</p>
+
+                <p>Setelah semuanya selesai, Haruto masuk ke kamarnya.</p>
+
+                <p>Ia meletakkan tas di lantai.</p>
+
+                <p>Kemudian duduk di tepi tempat tidur.</p>
+
+                <p>Ponselnya bergetar.</p>
+
+                <p>Satu pesan dari Aoi.</p>
+
+                <div class="chat-bubble">
+                    <span class="from">Aoi</span>
+                    Besok jadi, kan?
                 </div>
 
-                <p>Empat hal sederhana.</p>
+                <p>Haruto tersenyum.</p>
 
-                <p>Tidak ada target besar.</p>
+                <p>Ia membalas.</p>
 
-                <p>Tidak ada janji untuk mengubah hidup dalam semalam.</p>
+                <div class="chat-bubble reply">
+                    <span class="from">Haruto</span>
+                    Jadi.
+                </div>
 
-                <p>Hanya empat hal yang seharusnya sudah lama ia lakukan.</p>
+                <p>Pesan lain masuk.</p>
 
-                <p>Ryou menatap tulisan itu.</p>
+                <p>Dari grup teman-temannya.</p>
 
-                <p>Kemudian, di bagian paling bawah, ia menulis satu kata.</p>
+                <div class="chat-bubble">
+                    <span class="from">Grup Teman</span>
+                    Besok jangan telat lagi.
+                </div>
 
-                <p class="standalone-line">Besok.</p>
+                <p>Haruto tertawa kecil.</p>
 
-                <p>Ia menatapnya cukup lama.</p>
+                <p>Ia mengetik:</p>
 
-                <p>Kali ini kata itu terasa berbeda.</p>
+                <div class="chat-bubble reply">
+                    <span class="from">Haruto</span>
+                    Iya, iya.
+                </div>
 
-                <p>Bukan seperti alasan.</p>
-
-                <p>Setidaknya, belum.</p>
+                <p>Ponselnya diletakkan di atas meja.</p>
 
                 <div class="divider">✦ ✦ ✦</div>
 
-                <p>Ryou melipat kertas tersebut dan meletakkannya di atas meja.</p>
+                <p>Haruto kemudian berdiri dan membuka kalender kecil di dekat tempat tidurnya.</p>
 
-                <p>Kemudian mematikan lampu.</p>
+                <p>Beberapa tanggal sudah diberi tanda.</p>
 
-                <p>Ia berbaring.</p>
+                <p>Besok.</p>
 
-                <p>Matanya terpejam.</p>
+                <p>Akhir pekan.</p>
 
-                <p>Besok ia akan mulai.</p>
+                <p>Minggu depan.</p>
 
-                <p>Setidaknya begitu yang ia percaya.</p>
+                <p>Ada banyak hal yang ingin ia lakukan.</p>
 
-                <p>Dan untuk pertama kalinya setelah sekian lama, Ryou tidur tanpa menyalakan komputernya.</p>
+                <p>Tidak semuanya penting.</p>
 
-                <p>Di atas meja, selembar kertas tergeletak dalam gelap.</p>
+                <p>Sebagian bahkan sangat sederhana.</p>
 
-                <p>Empat rencana kecil.</p>
+                <p>Makan bersama keluarga.</p>
 
-                <p>Dan satu kata di bawahnya.</p>
+                <p>Bertemu Aoi.</p>
 
-                <p class="standalone-line">Besok.</p>
+                <p>Bermain dengan teman-temannya.</p>
+
+                <p>Pergi ke tempat baru.</p>
+
+                <p>Mencoba sesuatu yang belum pernah ia lakukan.</p>
+
+                <p>Haruto menatap kalender itu beberapa saat.</p>
+
+                <p>Masih banyak.</p>
+
+                <p>Ia tersenyum kecil.</p>
+
+                <p><span class="dialogue">"Masih sempat."</span></p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Haruto membuka laci meja.</p>
+
+                <p>Di dalamnya terdapat beberapa benda.</p>
+
+                <p>Sebuah jam tangan.</p>
+
+                <p>Beberapa lembar kertas.</p>
+
+                <p>Dan sebuah botol obat.</p>
+
+                <p>Ia mengambil botol itu.</p>
+
+                <p>Mengeluarkan satu tablet.</p>
+
+                <p>Menelannya dengan air.</p>
+
+                <p>Gerakannya begitu biasa.</p>
+
+                <p>Seolah sudah menjadi bagian dari rutinitas yang tidak perlu dipikirkan.</p>
+
+                <p>Botol itu kembali dimasukkan ke dalam laci.</p>
+
+                <p>Haruto menutupnya.</p>
+
+                <div class="divider">✦ ✦ ✦</div>
+
+                <p>Ia kemudian berbaring.</p>
+
+                <p>Lampu kamar dimatikan.</p>
+
+                <p>Dalam gelap, ponselnya kembali menyala.</p>
+
+                <p>Satu pesan terakhir dari Aoi.</p>
+
+                <div class="chat-bubble">
+                    <span class="from">Aoi</span>
+                    Selamat malam.
+                </div>
+
+                <p>Haruto membalas singkat.</p>
+
+                <div class="chat-bubble reply">
+                    <span class="from">Haruto</span>
+                    Selamat malam. Sampai besok.
+                </div>
+
+                <p>Ia meletakkan ponselnya.</p>
+
+                <p>Menutup mata.</p>
+
+                <p>Hari itu tidak memiliki sesuatu yang istimewa.</p>
+
+                <p>Namun Haruto menyukainya.</p>
+
+                <p>Karena masih ada teman-temannya.</p>
+
+                <p>Masih ada Aoi.</p>
+
+                <p>Masih ada keluarganya.</p>
+
+                <p>Masih ada banyak hal yang ingin ia lakukan.</p>
+
+                <p>Dan masih ada hari esok.</p>
+
+                <p>Haruto tersenyum kecil.</p>
+
+                <p class="standalone-line">Masih sempat.</p>
+
+                <p>Lalu ia tertidur.</p>
 
             </article>
 
-            <!-- ===== END OF CHAPTER + LANJUT BAB 4 ===== -->
+            <!-- ===== END OF CHAPTER + LANJUT BAB 5 ===== -->
             <div class="end-chapter reveal">
-                <div class="end-chapter-icon">🌙</div>
-                <div class="end-chapter-title">Akhir Bab 3</div>
+                <div class="end-chapter-icon">💊</div>
+                <div class="end-chapter-title">Akhir Bab 4</div>
                 <p class="end-chapter-text">
-                    Malam itu, Ryou tidur dengan tenang.<br>
-                    Ia belum tahu bahwa esok pagi... <span class="em">semuanya akan berubah.</span>
+                    Sebuah botol obat di dalam laci.<br>
+                    Sebuah rutinitas yang tidak perlu dipikirkan.<br>
+                    Dan dua kata yang <span class="em">tak pernah ia ucapkan pada siapa pun.</span>
                 </p>
-                <a href="bab 4.html" class="btn-lanjut">
-                    Lanjut ke Bab 4 <i class="fas fa-arrow-right"></i>
+                <a href="bab 5.html" class="btn-lanjut">
+                    Lanjut ke Bab 5 <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
@@ -1324,22 +1788,22 @@
                 <div class="chapter-nav-label">Navigasi Bab</div>
                 <div class="chapter-nav-buttons">
 
-                    <!-- Prev: Bab 2 -->
-                    <a href="bab 2.html" class="nav-chapter-btn">
+                    <!-- Prev: Bab 3 -->
+                    <a href="bab 3.html" class="nav-chapter-btn">
                         <span class="nav-btn-icon">
                             <i class="fas fa-arrow-left"></i>
                         </span>
                         <span class="nav-btn-text">
                             <span class="nav-btn-label">Bab Sebelumnya</span>
-                            <span class="nav-btn-title">Bab 2 — Yang Berjalan Lebih Dulu</span>
+                            <span class="nav-btn-title">Bab 3 — Besok</span>
                         </span>
                     </a>
 
-                    <!-- Next: Bab 4 -->
-                    <a href="bab 4.html" class="nav-chapter-btn next">
+                    <!-- Next: Bab 5 -->
+                    <a href="bab 5.html" class="nav-chapter-btn next">
                         <span class="nav-btn-text" style="text-align: right;">
                             <span class="nav-btn-label">Bab Selanjutnya</span>
-                            <span class="nav-btn-title">Bab 4 — Haruto</span>
+                            <span class="nav-btn-title">Bab 5 — Kehidupan Yang Bukan Milikku</span>
                         </span>
                         <span class="nav-btn-icon">
                             <i class="fas fa-arrow-right"></i>
@@ -1373,11 +1837,11 @@
             </a>
             <a href="#" class="bottom-nav-item active">
                 <i class="fas fa-book-open"></i>
-                <span>Bab 3</span>
-            </a>
-            <a href="bab 4.html" class="bottom-nav-item">
-                <i class="fas fa-arrow-right"></i>
                 <span>Bab 4</span>
+            </a>
+            <a href="bab 5.html" class="bottom-nav-item">
+                <i class="fas fa-arrow-right"></i>
+                <span>Bab 5</span>
             </a>
             <button class="bottom-nav-item" id="mobileMenuToggle">
                 <i class="fas fa-ellipsis-h"></i>
@@ -1418,10 +1882,10 @@
                 <a href="bab 2.html" class="nav-link sub">
                     <i class="fas fa-bookmark"></i> Bab 2 — Yang Berjalan Lebih Dulu
                 </a>
-                <a href="bab 3.html" class="nav-link sub active">
+                <a href="bab 3.html" class="nav-link sub">
                     <i class="fas fa-bookmark"></i> Bab 3 — Besok
                 </a>
-                <a href="bab 4.html" class="nav-link sub">
+                <a href="bab 4.html" class="nav-link sub active">
                     <i class="fas fa-bookmark"></i> Bab 4 — Haruto
                 </a>
                 <a href="bab 5.html" class="nav-link sub">
@@ -1586,9 +2050,9 @@
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
                 if (e.key === 'ArrowRight') {
-                    window.location.href = 'bab 4.html';
+                    window.location.href = 'bab 5.html';
                 } else if (e.key === 'ArrowLeft') {
-                    window.location.href = 'bab 2.html';
+                    window.location.href = 'bab 3.html';
                 }
             });
         }
@@ -1597,7 +2061,7 @@
         //  INIT
         // ============================================================
         function init() {
-            console.log('📖 Bab 3 — Besok — loaded');
+            console.log('📖 Bab 4 — Haruto — loaded');
 
             applyTheme(currentTheme);
 
